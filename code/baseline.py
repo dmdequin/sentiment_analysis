@@ -35,10 +35,24 @@ def tokenizer(sentence):
     
     return tok.findall(sentence)
 
+import torch
+
+if torch.cuda.is_available():       
+    device = torch.device("cuda")
+    #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
+    #print('Device name:', torch.cuda.get_device_name(0))
+
+else:
+    #print('No GPU available, using the CPU instead.')
+    device = torch.device("cpu")
+
 # load data
 train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
 X_test = loader(TEST)      # Test
+
+#train_data = train_data[0:1]
+#dev_data = dev_data[0:1]
 
 X_train, y_train = splitter(train_data)
 X_dev, y_dev = splitter(dev_data)
@@ -123,10 +137,10 @@ MAX_LEN = l
 token_ids = preprocessing_for_bert(X_train[0:2])
 
 # Run function `preprocessing_for_bert` on the train set and the validation set
-print('Tokenizing data...')
+#print('Tokenizing data...')
 train_inputs, train_masks = preprocessing_for_bert(X_train)
 val_inputs, val_masks = preprocessing_for_bert(X_dev)
-print('F\'ing Done!!')
+#print('F\'ing Done!!')
 
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
@@ -249,14 +263,14 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
     """Train the BertClassifier model.
     """
     # Start training loop
-    print("Start training...\n")
+    #print("Start training...\n")
     for epoch_i in range(epochs):
         # =======================================
         #               Training
         # =======================================
         # Print the header of the result table
-        print(f"{'Epoch':^7} | {'Batch':^7} | {'Train Loss':^12} | {'Val Loss':^10} | {'Val Acc':^9} | {'Elapsed':^9}")
-        print("-"*70)
+        #print(f"{'Epoch':^7} | {'Batch':^7} | {'Train Loss':^12} | {'Val Loss':^10} | {'Val Acc':^9} | {'Elapsed':^9}")
+        #print("-"*70)
 
         # Measure the elapsed time of each epoch
         t0_epoch, t0_batch = time.time(), time.time()
@@ -300,7 +314,7 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
                 time_elapsed = time.time() - t0_batch
 
                 # Print training results
-                print(f"{epoch_i + 1:^7} | {step:^7} | {batch_loss / batch_counts:^12.6f} | {'-':^10} | {'-':^9} | {time_elapsed:^9.2f}")
+                #print(f"{epoch_i + 1:^7} | {step:^7} | {batch_loss / batch_counts:^12.6f} | {'-':^10} | {'-':^9} | {time_elapsed:^9.2f}")
 
                 # Reset batch tracking variables
                 batch_loss, batch_counts = 0, 0
@@ -309,7 +323,7 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
         # Calculate the average loss over the entire training data
         avg_train_loss = total_loss / len(train_dataloader)
 
-        print("-"*70)
+        #print("-"*70)
         # =======================================
         #               Evaluation
         # =======================================
@@ -321,11 +335,11 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
             # Print performance over the entire training data
             time_elapsed = time.time() - t0_epoch
             
-            print(f"{epoch_i + 1:^7} | {'-':^7} | {avg_train_loss:^12.6f} | {val_loss:^10.6f} | {val_accuracy:^9.2f} | {time_elapsed:^9.2f}")
-            print("-"*70)
-        print("\n")
+            #print(f"{epoch_i + 1:^7} | {'-':^7} | {avg_train_loss:^12.6f} | {val_loss:^10.6f} | {val_accuracy:^9.2f} | {time_elapsed:^9.2f}")
+            #print("-"*70)
+        #print("\n")
     
-    print("Training complete!")
+    #print("Training complete!")
 
 
 def evaluate(model, val_dataloader):
@@ -372,7 +386,7 @@ train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=Tr
 
 # inference
 # Run `preprocessing_for_bert` on the test set
-print('Tokenizing data for inference...')
+#print('Tokenizing data for inference...')
 test_inputs, test_masks = preprocessing_for_bert(X_test_tokens)
 
 # Create the DataLoader for our test set
@@ -418,11 +432,9 @@ threshold = 0.63
 preds = np.where(probs[:, 1] > threshold, 1, 0)
 
 # Number of tweets predicted non-negative
-print("Number of reviews predicted positive: ", preds.sum())
+#print("Number of reviews predicted positive: ", preds.sum())
 
 # convert 0s and 1s into strings
-preds
-
 y_hat = []
 
 for i in preds:
@@ -431,6 +443,6 @@ for i in preds:
     else: y_hat.append('negative')
 
 # for export 
-test_pred = pd.read_json( '../data/raw/music_reviews_test_masked.json', lines=True)
+test_pred = pd.read_json( '../data/raw/music_reviews_test_masked.json.gz', lines=True)
 test_pred['sentiment'] = y_hat
 test_pred.to_json('../data/predictions/music_reviews_test.json', orient='records')
