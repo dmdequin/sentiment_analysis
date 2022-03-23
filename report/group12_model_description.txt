@@ -1,0 +1,3 @@
+Group 12: sabf, ddeq, ccor
+Model Description:
+We used regex to tokenize the reviews and summaries, which are concatenated together. This was fed into BERT to get the embeddings. The embedded reviews were fed into a FF neural network to arrive at the predictions. The neural network has a single hidden layer using ReLu as the activation function. The model uses cross entropy to compute the loss.
