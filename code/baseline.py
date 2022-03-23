@@ -445,4 +445,8 @@ for i in preds:
 # for export 
 test_pred = pd.read_json( '../data/raw/music_reviews_test_masked.json.gz', lines=True)
 test_pred['sentiment'] = y_hat
-test_pred.to_json('../data/predictions/music_reviews_test.json', orient='records')
+#Write in a way that codalabs will accept. Thanks to Nicola.
+new = test_pred.to_dict('records')
+test_json=[json.dumps(i)+'\n' for i in new]
+with open ('../data/predicitons/music_reviews_test.json', 'w') as file:
+    file.writelines(test_json)
