@@ -28,7 +28,7 @@ def splitter(L):
         
     return X, y
 
-def tokenizer(sentence):
+def tkn(sentence):
     """Function to find all tokens in a given sentence
     """
     tok = re.compile('[\'\"]|[A-Za-z]+|[.?!:\'\"]+')
@@ -51,8 +51,8 @@ train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
 X_test = loader(TEST)      # Test
 
-#train_data = train_data[0:1]
-#dev_data = dev_data[0:1]
+train_data = train_data[0:10]
+dev_data = dev_data[0:10]
 
 X_train, y_train = splitter(train_data)
 X_dev, y_dev = splitter(dev_data)
@@ -60,20 +60,25 @@ X_dev, y_dev = splitter(dev_data)
 # tokenizing data
 X_train_tokens = []
 for sentence in X_train:
-    temp = tokenizer(sentence)
+    temp = tkn(sentence)
     if len(temp) > 0:
         if len(temp) > 500:
             X_train_tokens.append(temp[0:500])
         else: X_train_tokens.append(temp)
     else: X_train_tokens.append('NULL')
 
+with open('train_tokens.csv', 'w') as f:
+    for l in X_train_tokens:
+        for i in l:
+            f.writelines(i + ',')
+
 X_dev_tokens = []
 for sentence in X_dev:
-    X_dev_tokens.append(tokenizer(sentence))
+    X_dev_tokens.append(tkn(sentence))
 
 X_test_tokens = []
 for sentence in X_test:
-    X_test_tokens.append(tokenizer(str(sentence)))
+    X_test_tokens.append(tkn(str(sentence)))
 
 # tokenise with BERT
 from transformers import BertTokenizer
@@ -384,7 +389,11 @@ set_seed(42)    # Set seed for reproducibility
 bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
 train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
 
-# inference
+import pickle
+
+pickle.dump(bert_classifier, open('../data/model.pkl', 'wb'))
+
+'''# inference
 # Run `preprocessing_for_bert` on the test set
 #print('Tokenizing data for inference...')
 test_inputs, test_masks = preprocessing_for_bert(X_test_tokens)
@@ -449,4 +458,4 @@ test_pred['sentiment'] = y_hat
 new = test_pred.to_dict('records')
 test_json=[json.dumps(i)+'\n' for i in new]
 with open ('../data/predicitons/music_reviews_test.json', 'w') as file:
-    file.writelines(test_json)
+    file.writelines(test_json)'''
