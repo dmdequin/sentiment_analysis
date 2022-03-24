@@ -38,6 +38,15 @@ def tkn(sentence):
 
 import torch
 
+if torch.cuda.is_available():       
+    device = torch.device("cuda")
+    print(f'There are {torch.cuda.device_count()} GPU(s) available.')
+    print('Device name:', torch.cuda.get_device_name(0))
+
+else:
+    print('No GPU available, using the CPU instead.')
+    device = torch.device("cpu")
+
 def set_seed(seed_value=42):
     """Set seed for reproducibility.
     """
@@ -58,7 +67,7 @@ else:
 # load data
 X_test = loader(TEST)      # Test
 
-X_test = X_test[0:10]
+#X_test = X_test[0:100]
 # tokenizing data
 X_test_tokens = []
 for sentence in X_test:
@@ -111,7 +120,7 @@ def preprocessing_for_bert(data):
 
     return input_ids, attention_masks
 
-MAX_LEN = 500
+MAX_LEN = 50
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
@@ -223,9 +232,9 @@ probs = bert_predict(bert_classifier, test_dataloader)
 
 with open ('probs.csv', 'w') as f:
     for i in probs:
-        f.writelines(i)
+        f.writelines(str(i)+',')
 
-# Get predictions from the probabilities
+'''# Get predictions from the probabilities
 threshold = 0.63
 preds = np.where(probs[:, 1] > threshold, 1, 0)
 
@@ -247,4 +256,4 @@ test_pred['sentiment'] = y_hat
 new = test_pred.to_dict('records')
 test_json=[json.dumps(i)+'\n' for i in new]
 with open ('../data/predicitons/pickle_music_reviews_test.json', 'w') as file:
-    file.writelines(test_json)
+    file.writelines(test_json)'''
