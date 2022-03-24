@@ -233,27 +233,3 @@ probs = bert_predict(bert_classifier, test_dataloader)
 with open ('probs.csv', 'w') as f:
     for i in probs:
         f.writelines(str(i)+',')
-
-'''# Get predictions from the probabilities
-threshold = 0.63
-preds = np.where(probs[:, 1] > threshold, 1, 0)
-
-# Number of tweets predicted non-negative
-#print("Number of reviews predicted positive: ", preds.sum())
-
-# convert 0s and 1s into strings
-y_hat = []
-
-for i in preds:
-    if i:
-        y_hat.append('positive')
-    else: y_hat.append('negative')
-
-# for export 
-test_pred = pd.read_json( '../data/raw/music_reviews_test_masked.json.gz', lines=True)
-test_pred['sentiment'] = y_hat
-#Write in a way that codalabs will accept. Thanks to Nicola.
-new = test_pred.to_dict('records')
-test_json=[json.dumps(i)+'\n' for i in new]
-with open ('../data/predicitons/pickle_music_reviews_test.json', 'w') as file:
-    file.writelines(test_json)'''
