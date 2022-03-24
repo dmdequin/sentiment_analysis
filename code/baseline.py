@@ -67,11 +67,6 @@ for sentence in X_train:
         else: X_train_tokens.append(temp)
     else: X_train_tokens.append('NULL')
 
-with open('train_tokens.csv', 'w') as f:
-    for l in X_train_tokens:
-        for i in l:
-            f.writelines(i + ',')
-
 X_dev_tokens = []
 for sentence in X_dev:
     X_dev_tokens.append(tkn(sentence))
