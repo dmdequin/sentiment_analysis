@@ -7,8 +7,12 @@ from transformers import BertTokenizer
 import json
 import torch.nn as nn
 from transformers import BertModel
+from datetime import datetime
 
 TEST  = '../data/interim/test.csv'
+
+now = datetime.now()
+current_date_time = now.strftime("_%d-%m-%Y_%H:%M:%S")
 
 ## functions
 def loader(PATH):
@@ -230,6 +234,6 @@ def bert_predict(model, test_dataloader):
 # Compute predicted probabilities on the test set
 probs = bert_predict(bert_classifier, test_dataloader)
 
-with open ('probs.csv', 'w') as f:
+with open ('../data/probabilities/probs' + current_date_time + '.csv', 'w') as f:
     for i in probs:
         f.writelines(str(i)+',')
