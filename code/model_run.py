@@ -12,7 +12,7 @@ from datetime import datetime
 TEST  = '../data/interim/test.csv'
 
 now = datetime.now()
-current_date_time = now.strftime("_%d-%m-%Y_%H:%M:%S")
+current_date_time = now.strftime("_%d-%m-%Y_%H_%M_%S")
 
 ## functions
 def loader(PATH):
