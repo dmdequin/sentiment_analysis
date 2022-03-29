@@ -18,7 +18,7 @@ input_data = []
 label = []
 c = 0
 n = 500
-s = 20
+s = 100
 with open(TRAIN, mode='r') as file:
     csvFile = csv.reader(file)
     for lines in csvFile:
