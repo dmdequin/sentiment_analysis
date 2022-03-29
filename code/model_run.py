@@ -12,7 +12,7 @@ from datetime import datetime
 TEST  = '../data/interim/test.csv'
 
 now = datetime.now()
-current_date_time = now.strftime("_%d-%m-%Y_%H_%M_%S")
+current_date_time = now.strftime("_%d%m%Y_%H%M%S")
 
 ## functions
 def loader(PATH):
@@ -44,11 +44,11 @@ import torch
 
 if torch.cuda.is_available():       
     device = torch.device("cuda")
-    print(f'There are {torch.cuda.device_count()} GPU(s) available.')
-    print('Device name:', torch.cuda.get_device_name(0))
+    #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
+    #print('Device name:', torch.cuda.get_device_name(0))
 
 else:
-    print('No GPU available, using the CPU instead.')
+    #print('No GPU available, using the CPU instead.')
     device = torch.device("cpu")
 
 def set_seed(seed_value=42):
@@ -58,15 +58,6 @@ def set_seed(seed_value=42):
     np.random.seed(seed_value)
     torch.manual_seed(seed_value)
     torch.cuda.manual_seed_all(seed_value)
-
-if torch.cuda.is_available():       
-    device = torch.device("cuda")
-    #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
-    #print('Device name:', torch.cuda.get_device_name(0))
-
-else:
-    #print('No GPU available, using the CPU instead.')
-    device = torch.device("cpu")
 
 # load data
 X_test = loader(TEST)      # Test
@@ -124,6 +115,7 @@ def preprocessing_for_bert(data):
 
     return input_ids, attention_masks
 
+# We capped length to 50 to see if model performs well with capped data
 MAX_LEN = 50
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
@@ -185,6 +177,7 @@ class BertClassifier(nn.Module):
         logits = self.classifier(last_hidden_state_cls)
 
         return logits
+
 import pickle
 
 bert_classifier = pickle.load(open('../data/model.pkl', 'rb'))
