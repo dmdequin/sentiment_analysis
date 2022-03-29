@@ -9,6 +9,11 @@ import torch.nn as nn
 from transformers import BertModel
 from datetime import datetime
 
+import pickle
+
+bert_classifier = pickle.load(open('model.pkl', 'rb'))
+print('model loaded')
+
 TEST  = '../data/interim/test.csv'
 
 now = datetime.now()
@@ -177,11 +182,7 @@ class BertClassifier(nn.Module):
 
         return logits
 
-import pickle
 
-bert_classifier = pickle.load(open('model_29032022_144252.pkl', 'rb'))
-
-print('model loaded')
 
 # inference
 # Run `preprocessing_for_bert` on the test set
