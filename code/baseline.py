@@ -4,10 +4,14 @@ import numpy as np
 import pandas as pd
 import torch
 from transformers import BertTokenizer
+from datetime import datetime
 
 TRAIN = '../data/interim/train.csv'
 DEV   = '../data/interim/dev.csv'
 TEST  = '../data/interim/test.csv'
+
+now = datetime.now()
+current_time = now.strftime("_%d%m%Y_%H%M%S")
 
 ## functions
 def loader(PATH):
@@ -17,7 +21,6 @@ def loader(PATH):
         for lines in csvFile:
             text.append(lines)
     return text
-
 
 def splitter(L):
     X = []
@@ -49,7 +52,7 @@ else:
 # load data
 train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
-X_test = loader(TEST)      # Test
+#X_test = loader(TEST)      # Test
 
 train_data = train_data[0:10]
 dev_data = dev_data[0:10]
@@ -71,9 +74,9 @@ X_dev_tokens = []
 for sentence in X_dev:
     X_dev_tokens.append(tkn(sentence))
 
-X_test_tokens = []
-for sentence in X_test:
-    X_test_tokens.append(tkn(str(sentence)))
+#X_test_tokens = []
+#for sentence in X_test:
+#    X_test_tokens.append(tkn(str(sentence)))
 
 # tokenise with BERT
 from transformers import BertTokenizer
@@ -123,7 +126,7 @@ def preprocessing_for_bert(data):
     return input_ids, attention_masks
 
 # Encode our concatenated data
-encoded_ = [tokenizer.encode(sent, add_special_tokens=True) for sent in X_train_tokens]
+encoded_ = [tokenizer.encode(sent, add_special_tokens=True) for sent in X_train]
 
 # for max len
 l = 0
@@ -133,14 +136,10 @@ for sent in encoded_:
         
 MAX_LEN = l
 
-# Print sentence 0 and its encoded token ids
-token_ids = preprocessing_for_bert(X_train[0:2])
-
 # Run function `preprocessing_for_bert` on the train set and the validation set
 #print('Tokenizing data...')
 train_inputs, train_masks = preprocessing_for_bert(X_train)
 val_inputs, val_masks = preprocessing_for_bert(X_dev)
-#print('F\'ing Done!!')
 
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
@@ -150,7 +149,7 @@ train_labels = torch.tensor(y_train)
 val_labels = torch.tensor(y_dev)
 
 # For fine-tuning BERT, the authors recommend a batch size of 16 or 32.
-batch_size = 32
+batch_size = 2
 
 # Create the DataLoader for our training set
 train_data = TensorDataset(train_inputs, train_masks, train_labels)
@@ -268,9 +267,6 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
         # =======================================
         #               Training
         # =======================================
-        # Print the header of the result table
-        #print(f"{'Epoch':^7} | {'Batch':^7} | {'Train Loss':^12} | {'Val Loss':^10} | {'Val Acc':^9} | {'Elapsed':^9}")
-        #print("-"*70)
 
         # Measure the elapsed time of each epoch
         t0_epoch, t0_batch = time.time(), time.time()
@@ -323,7 +319,6 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
         # Calculate the average loss over the entire training data
         avg_train_loss = total_loss / len(train_dataloader)
 
-        #print("-"*70)
         # =======================================
         #               Evaluation
         # =======================================
@@ -335,8 +330,6 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
             # Print performance over the entire training data
             time_elapsed = time.time() - t0_epoch
             
-            #print(f"{epoch_i + 1:^7} | {'-':^7} | {avg_train_loss:^12.6f} | {val_loss:^10.6f} | {val_accuracy:^9.2f} | {time_elapsed:^9.2f}")
-            #print("-"*70)
         #print("\n")
     
     #print("Training complete!")
@@ -386,4 +379,4 @@ train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=Tr
 
 import pickle
 
-pickle.dump(bert_classifier, open('../data/model.pkl', 'wb'))
+pickle.dump(bert_classifier, open('../data/model'+current_time+'.pkl', 'wb'))
