@@ -54,8 +54,8 @@ train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
 #X_test = loader(TEST)      # Test
 
-train_data = train_data[0:10]
-dev_data = dev_data[0:10]
+train_data = train_data[0:50]
+dev_data = dev_data[0:50]
 
 X_train, y_train = splitter(train_data)
 X_dev, y_dev = splitter(dev_data)
@@ -116,8 +116,8 @@ def preprocessing_for_bert(data):
             )
         
         # Add the outputs to the lists
-        input_ids.append(encoded_sent.get('input_ids'))
-        attention_masks.append(encoded_sent.get('attention_mask'))
+        input_ids.append(encoded_sent.get('input_ids')[:512])
+        attention_masks.append(encoded_sent.get('attention_mask')[:512])
 
     # Convert lists to tensors
     input_ids = torch.tensor(input_ids)

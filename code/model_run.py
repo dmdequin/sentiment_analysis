@@ -12,7 +12,7 @@ from datetime import datetime
 TEST  = '../data/interim/test.csv'
 
 now = datetime.now()
-current_date_time = now.strftime("_%d%m%Y_%H%M%S")
+current_time = now.strftime("_%d%m%Y_%H%M%S")
 
 ## functions
 def loader(PATH):
@@ -22,7 +22,6 @@ def loader(PATH):
         for lines in csvFile:
             text.append(lines)
     return text
-
 
 def splitter(L):
     X = []
@@ -62,11 +61,11 @@ def set_seed(seed_value=42):
 # load data
 X_test = loader(TEST)      # Test
 
-#X_test = X_test[0:100]
+X_test = X_test[0:10]
 # tokenizing data
-X_test_tokens = []
-for sentence in X_test:
-    X_test_tokens.append(tkn(str(sentence)))
+#X_test_tokens = []
+#for sentence in X_test:
+#    X_test_tokens.append(tkn(str(sentence)))
 
 # tokenise with BERT
 from transformers import BertTokenizer
@@ -116,7 +115,7 @@ def preprocessing_for_bert(data):
     return input_ids, attention_masks
 
 # We capped length to 50 to see if model performs well with capped data
-MAX_LEN = 50
+MAX_LEN = 150
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
@@ -180,14 +179,13 @@ class BertClassifier(nn.Module):
 
 import pickle
 
-bert_classifier = pickle.load(open('../data/model.pkl', 'rb'))
+bert_classifier = pickle.load(open('model_29032022_144252.pkl', 'rb'))
 
 print('model loaded')
 
 # inference
 # Run `preprocessing_for_bert` on the test set
-#print('Tokenizing data for inference...')
-test_inputs, test_masks = preprocessing_for_bert(X_test_tokens)
+test_inputs, test_masks = preprocessing_for_bert(X_test)
 
 # Create the DataLoader for our test set
 test_dataset = TensorDataset(test_inputs, test_masks)
@@ -227,6 +225,6 @@ def bert_predict(model, test_dataloader):
 # Compute predicted probabilities on the test set
 probs = bert_predict(bert_classifier, test_dataloader)
 
-with open ('../data/probabilities/probs' + current_date_time + '.csv', 'w') as f:
+with open ('../data/probabilities/probs' + current_time + '.csv', 'w') as f:
     for i in probs:
         f.writelines(str(i)+',')
