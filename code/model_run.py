@@ -8,16 +8,16 @@ import json
 import torch.nn as nn
 from transformers import BertModel
 from datetime import datetime
+import torch
+import random
 
 import pickle
-
-bert_classifier = pickle.load(open('model.pkl', 'rb'))
-print('model loaded')
 
 TEST  = '../data/interim/test.csv'
 
 now = datetime.now()
 current_time = now.strftime("_%d%m%Y_%H%M%S")
+batch_size = 2
 
 ## functions
 def loader(PATH):
@@ -28,29 +28,10 @@ def loader(PATH):
             text.append(lines)
     return text
 
-def splitter(L):
-    X = []
-    y = []
-    for i in L:
-        X.append(i[0])
-        y.append(int(i[1]))
-        
-    return X, y
-
-def tkn(sentence):
-    """Function to find all tokens in a given sentence
-    """
-    tok = re.compile('[\'\"]|[A-Za-z]+|[.?!:\'\"]+')
-    
-    return tok.findall(sentence)
-
-import torch
-
 if torch.cuda.is_available():       
     device = torch.device("cuda")
     #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
     #print('Device name:', torch.cuda.get_device_name(0))
-
 else:
     #print('No GPU available, using the CPU instead.')
     device = torch.device("cpu")
@@ -64,13 +45,14 @@ def set_seed(seed_value=42):
     torch.cuda.manual_seed_all(seed_value)
 
 # load data
-X_test = loader(TEST)      # Test
+X_test = loader(TEST) 
+X_test = X_test[0:100]
 
-X_test = X_test[0:10]
-# tokenizing data
-#X_test_tokens = []
-#for sentence in X_test:
-#    X_test_tokens.append(tkn(str(sentence)))
+# Fix X_test so that it is a single list of strings
+test = []
+for i in range(len(X_test)):
+    test.append(str(X_test[i][0]))
+X_test = test
 
 # tokenise with BERT
 from transformers import BertTokenizer
@@ -119,19 +101,15 @@ def preprocessing_for_bert(data):
 
     return input_ids, attention_masks
 
-# We capped length to 50 to see if model performs well with capped data
-MAX_LEN = 150
+MAX_LEN = 512
+
 # BERT model defs
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
-import random
 
 # Specify loss function
 loss_fn = nn.CrossEntropyLoss()
 
 set_seed(42)    # Set seed for reproducibility
-#bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
-#train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
 
 class BertClassifier(nn.Module):
     """Bert Model for Classification Tasks.
@@ -182,6 +160,9 @@ class BertClassifier(nn.Module):
 
         return logits
 
+#############################################################
+bert_classifier = pickle.load(open('model_100_100.pkl', 'rb'))
+print('model loaded')
 
 
 # inference
@@ -191,7 +172,7 @@ test_inputs, test_masks = preprocessing_for_bert(X_test)
 # Create the DataLoader for our test set
 test_dataset = TensorDataset(test_inputs, test_masks)
 test_sampler = SequentialSampler(test_dataset)
-test_dataloader = DataLoader(test_dataset, sampler=test_sampler, batch_size=32)
+test_dataloader = DataLoader(test_dataset, sampler=test_sampler, batch_size=batch_size)
 
 import torch.nn.functional as F
 

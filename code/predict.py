@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 now = datetime.now()
-current_date_time = now.strftime("%d%m%Y_%H%M%S")
+current_time = now.strftime("%d%m%Y_%H%M%S")
 
 def get_predictions(N, PATH):
     # Get predictions from the probabilities
@@ -38,7 +38,7 @@ def get_predictions(N, PATH):
     #Write in a way that codalabs will accept. Thanks to Nicola.
     new = test_pred.to_dict('records')
     test_json=[json.dumps(i)+'\n' for i in new]
-    with open ('../data/predictions/pickle_music_reviews_test_'+current_date_time+'.json', 'w') as file:
+    with open ('../data/predictions/pickle_music_reviews_test_'+'_100_100_ALL'+'.json', 'w') as file:
         file.writelines(test_json)
 
 

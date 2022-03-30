@@ -5,6 +5,9 @@ import pandas as pd
 import torch
 from transformers import BertTokenizer
 from datetime import datetime
+import pickle
+import torch
+
 
 TRAIN = '../data/interim/train.csv'
 DEV   = '../data/interim/dev.csv'
@@ -31,15 +34,6 @@ def splitter(L):
         
     return X, y
 
-def tkn(sentence):
-    """Function to find all tokens in a given sentence
-    """
-    tok = re.compile('[\'\"]|[A-Za-z]+|[.?!:\'\"]+')
-    
-    return tok.findall(sentence)
-
-import torch
-
 if torch.cuda.is_available():       
     device = torch.device("cuda")
     #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
@@ -54,29 +48,13 @@ train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
 #X_test = loader(TEST)      # Test
 
-train_data = train_data[0:50]
-dev_data = dev_data[0:50]
+train_data = train_data[0:100]
+dev_data = dev_data[0:100]
 
 X_train, y_train = splitter(train_data)
 X_dev, y_dev = splitter(dev_data)
 
-# tokenizing data
-X_train_tokens = []
-for sentence in X_train:
-    temp = tkn(sentence)
-    if len(temp) > 0:
-        if len(temp) > 500:
-            X_train_tokens.append(temp[0:500])
-        else: X_train_tokens.append(temp)
-    else: X_train_tokens.append('NULL')
-
-X_dev_tokens = []
-for sentence in X_dev:
-    X_dev_tokens.append(tkn(sentence))
-
-#X_test_tokens = []
-#for sentence in X_test:
-#    X_test_tokens.append(tkn(str(sentence)))
+MAX_LEN = 512
 
 # tokenise with BERT
 from transformers import BertTokenizer
@@ -116,8 +94,8 @@ def preprocessing_for_bert(data):
             )
         
         # Add the outputs to the lists
-        input_ids.append(encoded_sent.get('input_ids')[:512])
-        attention_masks.append(encoded_sent.get('attention_mask')[:512])
+        input_ids.append(encoded_sent.get('input_ids'))
+        attention_masks.append(encoded_sent.get('attention_mask'))
 
     # Convert lists to tensors
     input_ids = torch.tensor(input_ids)
@@ -127,14 +105,6 @@ def preprocessing_for_bert(data):
 
 # Encode our concatenated data
 encoded_ = [tokenizer.encode(sent, add_special_tokens=True) for sent in X_train]
-
-# for max len
-l = 0
-for sent in encoded_:
-    if len(sent) > l:
-        l = len(sent)
-        
-MAX_LEN = l
 
 # Run function `preprocessing_for_bert` on the train set and the validation set
 #print('Tokenizing data...')
@@ -329,11 +299,8 @@ def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=Fal
 
             # Print performance over the entire training data
             time_elapsed = time.time() - t0_epoch
-            
-        #print("\n")
-    
+                
     #print("Training complete!")
-
 
 def evaluate(model, val_dataloader):
     """After the completion of each training epoch, measure the model's performance
@@ -377,6 +344,4 @@ set_seed(42)    # Set seed for reproducibility
 bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
 train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
 
-import pickle
-
-pickle.dump(bert_classifier, open('../data/model'+current_time+'.pkl', 'wb'))
+pickle.dump(bert_classifier, open('model'+'_100_100'+'.pkl', 'wb'))
