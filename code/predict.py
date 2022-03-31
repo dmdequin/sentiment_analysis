@@ -13,8 +13,15 @@ def get_predictions(N, PATH):
     with open(PATH, 'r') as f:
         temp = (f.read().split(','))
         for i in temp[:-1]:
+            #print('i', i)
             a = i.split(' ')
-            probs.append([a[0][1:],a[1][:-1] ])
+            #print(len(a))
+            t = []
+            for u in a:
+                if len(u) > 1:
+                    t.append(u)
+            #print(len(t))
+            probs.append(t)
 
     probs = np.array(probs)
     #print(probs)
