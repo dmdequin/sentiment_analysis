@@ -6,9 +6,8 @@ from datetime import datetime
 now = datetime.now()
 current_time = now.strftime("%d%m_%H%M")
 
-def get_predictions(N, PATH):
+def get_predictions(PATH):
     # Get predictions from the probabilities
-    threshold = N
     probs = []
     with open('../data/probabilities/' + PATH, 'r') as f:
         temp = (f.read().split(','))
@@ -40,13 +39,13 @@ def get_predictions(N, PATH):
             y_hat.append('positive')
         else: y_hat.append('negative')
     # for export 
-    test_pred = pd.read_json( '../data/group12,json', lines=True)
+    test_pred = pd.read_json( '../data/raw/phase2_testData-masked.json.gz', lines=True)
     #test_pred = test_pred.iloc[0:100]
     test_pred['sentiment'] = y_hat
     #Write in a way that codalabs will accept. Thanks to Nicola.
     new = test_pred.to_dict('records')
     test_json=[json.dumps(i)+'\n' for i in new]
-    with open ('../data/predictions/hardcases_predictions'+'.json', 'w') as file:
+    with open ('../data/predictions/all_hardcases_predictions'+'.json', 'w') as file:
         file.writelines(test_json)
 
 

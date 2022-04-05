@@ -13,7 +13,7 @@ import random
 
 import pickle
 
-TEST  = '../data/group12.json'
+TEST  = '../data/interim/hard.csv'
 
 now = datetime.now()
 current_time = now.strftime("_%d%m%Y_%H%M%S")
@@ -46,7 +46,7 @@ def set_seed(seed_value=42):
 
 # load data
 X_test = loader(TEST) 
-X_test = X_test[0:100]
+#X_test = X_test[0:100]
 
 # Fix X_test so that it is a single list of strings
 test = []
@@ -207,6 +207,6 @@ def bert_predict(model, test_dataloader):
 # Compute predicted probabilities on the test set
 probs = bert_predict(bert_classifier, test_dataloader)
 
-with open ('../data/probabilities/12hardprobs.csv', 'w') as f:
+with open ('../data/probabilities/hardprobs.csv', 'w') as f:
     for i in probs:
         f.writelines(str(i)+',')
