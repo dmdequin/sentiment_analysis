@@ -6,9 +6,8 @@ from datetime import datetime
 now = datetime.now()
 current_time = now.strftime("%d%m_%H%M")
 
-def get_predictions(N, PATH):
+def get_predictions(PATH):
     # Get predictions from the probabilities
-    threshold = N
     probs = []
     with open('../data/probabilities/' + PATH, 'r') as f:
         temp = (f.read().split(','))
