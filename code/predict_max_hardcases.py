@@ -42,10 +42,12 @@ def get_predictions(PATH):
     test_pred = pd.read_json( '../data/raw/phase2_testData-masked.json.gz', lines=True)
     #test_pred = test_pred.iloc[0:100]
     test_pred['sentiment'] = y_hat
+
+    test_pred = test_pred[['reviewText', 'sentiment', 'category', 'group']].copy()
     #Write in a way that codalabs will accept. Thanks to Nicola.
     new = test_pred.to_dict('records')
     test_json=[json.dumps(i)+'\n' for i in new]
-    with open ('../data/predictions/all_hardcases_predictions'+'.json', 'w') as file:
+    with open ('../data/predictions/phase2_testData'+'.json', 'w') as file:
         file.writelines(test_json)
 
 
