@@ -37,9 +37,9 @@ Add additional notes about how to deploy this on a live system
 
 Group 12
 
-Danielle Dequin ddeq@itu.dk
-Chrisanna Cornish ccor@itu.dk
-Sabrina Pereira sabf@itu.dk
+* Danielle Dequin ddeq@itu.dk
+* Chrisanna Cornish ccor@itu.dk
+* Sabrina Pereira sabf@itu.dk
 
 ## Versioning
 
