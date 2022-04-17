@@ -49,9 +49,9 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under no such License - see the [LICENSE.md](LICENSE.md) file for details if we make one.
 
 ## Acknowledgments
 
 * This [tutorial](https://skimai.com/fine-tuning-bert-for-sentiment-analysis/)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for the ReadMe template
+* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for the ReadMe template.
