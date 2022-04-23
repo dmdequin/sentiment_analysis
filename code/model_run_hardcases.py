@@ -7,7 +7,6 @@ from transformers import BertTokenizer
 import json
 import torch.nn as nn
 from transformers import BertModel
-from datetime import datetime
 import torch
 import random
 
@@ -15,8 +14,6 @@ import pickle
 
 TEST  = '../data/interim/hard.csv'
 
-now = datetime.now()
-current_time = now.strftime("_%d%m%Y_%H%M%S")
 batch_size = 2
 
 ## functions
@@ -161,9 +158,8 @@ class BertClassifier(nn.Module):
         return logits
 
 #############################################################
-bert_classifier = pickle.load(open('model_ALL_ALL.pkl', 'rb'))
+bert_classifier = pickle.load(open('models/model_ALL_ALL.pkl', 'rb'))
 print('model loaded')
-
 
 # inference
 # Run `preprocessing_for_bert` on the test set

@@ -48,8 +48,8 @@ train_data = loader(TRAIN) # Training
 dev_data = loader(DEV)     # Validation
 #X_test = loader(TEST)      # Test
 
-train_data = train_data[0:100]
-dev_data = dev_data[0:100]
+#train_data = train_data[0:100]
+#dev_data = dev_data[0:100]
 
 X_train, y_train = splitter(train_data)
 X_dev, y_dev = splitter(dev_data)
@@ -86,10 +86,10 @@ def preprocessing_for_bert(data):
         encoded_sent = tokenizer.encode_plus(
             text=sent,  # Preprocess sentence
             add_special_tokens=True,        # Add `[CLS]` and `[SEP]`
-            max_length=MAX_LEN,                  # Max length to truncate/pad
-            padding='max_length',         # Pad sentence to max length
+            max_length=MAX_LEN,             # Max length to truncate/pad
+            padding='max_length',           # Pad sentence to max length
             #return_tensors='pt',           # Return PyTorch tensor
-            return_attention_mask=True,      # Return attention mask
+            return_attention_mask=True,     # Return attention mask
             truncation = True
             )
         
@@ -344,4 +344,4 @@ set_seed(42)    # Set seed for reproducibility
 bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
 train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
 
-pickle.dump(bert_classifier, open('model'+'_100_100'+'.pkl', 'wb'))
+pickle.dump(bert_classifier, open('models/model'+'_ALL_ALL'+'.pkl', 'wb'))

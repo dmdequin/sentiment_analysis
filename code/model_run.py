@@ -13,10 +13,15 @@ import random
 
 import pickle
 
-TEST  = '../data/interim/test.csv'
+import sys
+args = sys.argv
+TEST_FILE = args[1]  # 'test.csv'           # test data to be run through the model
+MODEL = args[2]      # 'model_ALL_ALL.pkl'  # model that is being used
+PROBS_FILE = args[3] # 'probs_music.csv'    # name to save the probabilities
 
-now = datetime.now()
-current_time = now.strftime("_%d%m%Y_%H%M%S")
+#now = datetime.now()
+#current_time = now.strftime("_%d%m%Y_%H%M%S")
+
 batch_size = 2
 
 ## functions
@@ -45,8 +50,8 @@ def set_seed(seed_value=42):
     torch.cuda.manual_seed_all(seed_value)
 
 # load data
-X_test = loader(TEST) 
-X_test = X_test[0:100]
+X_test = loader('../data/interim/'+TEST_FILE) 
+#X_test = X_test[0:100]
 
 # Fix X_test so that it is a single list of strings
 test = []
@@ -161,9 +166,8 @@ class BertClassifier(nn.Module):
         return logits
 
 #############################################################
-bert_classifier = pickle.load(open('model_100_100.pkl', 'rb'))
+bert_classifier = pickle.load(open('models/' + MODEL, 'rb'))
 print('model loaded')
-
 
 # inference
 # Run `preprocessing_for_bert` on the test set
@@ -207,6 +211,6 @@ def bert_predict(model, test_dataloader):
 # Compute predicted probabilities on the test set
 probs = bert_predict(bert_classifier, test_dataloader)
 
-with open ('../data/probabilities/probs' + current_time + '.csv', 'w') as f:
+with open ('../data/probabilities/' + PROBS_FILE, 'w') as f:
     for i in probs:
         f.writelines(str(i)+',')

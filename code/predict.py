@@ -6,14 +6,13 @@ from datetime import datetime
 now = datetime.now()
 current_time = now.strftime("%d%m%Y_%H%M%S")
 
-def get_predictions(N, PATH):
+def get_predictions(N, PROB_FILE):
     # Get predictions from the probabilities
     threshold = N
     probs = []
-    with open(PATH, 'r') as f:
+    with open('../data/probabilities/' + PROB_FILE, 'r') as f:
         temp = (f.read().split(','))
         for i in temp[:-1]:
-            #print('i', i)
             a = i.split(' ')
             #print(len(a))
             t = []
@@ -38,14 +37,14 @@ def get_predictions(N, PATH):
             y_hat.append('positive')
         else: y_hat.append('negative')
 
-    # for export 
+    # for export, open the test data and append predicted sentiment
     test_pred = pd.read_json( '../data/raw/music_reviews_test_masked.json.gz', lines=True)
-    #test_pred = test_pred.iloc[0:100]
     test_pred['sentiment'] = y_hat
-    #Write in a way that codalabs will accept. Thanks to Nicola.
+    
+    # Write in a way that codalabs will accept. Thanks to Nicola.
     new = test_pred.to_dict('records')
     test_json=[json.dumps(i)+'\n' for i in new]
-    with open ('../data/predictions/pickle_music_reviews_test_'+'_100_100_ALL'+'.json', 'w') as file:
+    with open ('../data/predictions/pickle_music_reviews_test_'+'_ALL_ALL_ALL'+'.json', 'w') as file:
         file.writelines(test_json)
 
 
@@ -53,4 +52,8 @@ if __name__ == '__main__':
     import sys
     args = sys.argv
     #print(args)
-    get_predictions(args[1], args[2])
+    THRESHOLD = args[1]  # threshold (between 0.1 and 1)
+    PROB = args[2]       # probabilities file
+    #TEST_DATA = args[3] # path to test data
+    #PRED = args[4]      # path to save prediction file
+    get_predictions(THRESHOLD, PROB)
