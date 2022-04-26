@@ -14,7 +14,9 @@ CORPUS = args[1]  # raw corpus file. For example: # music_reviews_train.json.gz
 FILE = args[2]     # name to save interim CSV file. For example: # games
 # = args[3]  # 
 
-# example: python3 corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
+# examples: 
+# python3 corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
+# python3 corpus_load.py Video_Games.json.gz games
 
 #######################################################
 review_keys = set(['image', 'vote'])
