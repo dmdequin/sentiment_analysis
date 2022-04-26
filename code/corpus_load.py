@@ -4,10 +4,13 @@ import csv
 import re
 import sys
 import pandas as pd
+import numpy as np
 
 args = sys.argv
+if len(args) < 2:
+    print("You forgot to enter the file")
 CORPUS = args[1]  # raw corpus file. For example: # music_reviews_train.json.gz
-CSV = args[2]     # name to save interim CSV file. For example: # games.csv
+#CSV = args[2]     # name to save interim CSV file. For example: # games.csv
 # = args[3]  # 
 
 #######################################################
@@ -78,14 +81,8 @@ raw = loader(raw_file)
 # Make sets of Review Text and Star Rating
 X, y = set_making(raw)
 
-print(X[0])
-
-# Convert to dataframe and save to CSV
+# Convert to dataframe
 data = pd.DataFrame(list(zip(X,y)), columns=['review','sentiment'])
-data.to_csv('../data/interim/' + CSV, index=False)
-
-# Load Interim CSV file
-data = csv_loader('../data/interim/' + CSV)
 
 #######################################################
 # Remove 3's
@@ -94,16 +91,24 @@ indexNames = data[data['sentiment'] == 3].index
 
 # Delete these row indexes from dataFrame
 data.drop(indexNames , inplace=True)
-print(data.head())
 
 #######################################################
-# Convert Star count to '0' and '1'
+# Dictionary to map star to "0" (negative) or "1" (positive)
+label_dict = {1:0, 2:0, 4:1, 5:1}
+data['lable'] = data['sentiment'].map(label_dict)
+data.drop('sentiment', axis=1, inplace=True)
 
+print(data.head())
 
 #######################################################
 # Train, Dev, Test, Split
 
 
 
+#######################################################
+# save to csv
+#data.to_csv('../data/interim/' + CSV, index=False)
 
+# Load Interim CSV file
+#data = csv_loader('../data/interim/' + CSV)
 
