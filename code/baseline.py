@@ -56,7 +56,7 @@ def preprocessing_for_bert(data):
         encoded_sent = tokenizer.encode_plus(
             text=sent,  # Preprocess sentence
             add_special_tokens=True,        # Add `[CLS]` and `[SEP]`
-            max_length=MAX_LEN,             # Max length to truncate/pad
+            max_length=512,             # Max length to truncate/pad
             padding='max_length',           # Pad sentence to max length
             #return_tensors='pt',           # Return PyTorch tensor
             return_attention_mask=True,     # Return attention mask
@@ -293,8 +293,8 @@ if __name__ == '__main__':
     dev_data = loader(DEV)     # Validation
     #X_test = loader(TEST)      # Test
 
-    train_data = train_data[0:100]
-    dev_data = dev_data[0:100]
+    train_data = train_data[101:120]
+    dev_data = dev_data[101:120]
 
     X_train, y_train = splitter(train_data)
     X_dev, y_dev = splitter(dev_data)
@@ -355,8 +355,22 @@ if __name__ == '__main__':
         train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
         pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))
 
-    elif NEW:
+    else:
         print('loading model')
-        pickle.load(model, MODEL)
-        train(model, train_dataloader, val_dataloader, epochs=2, evaluation=True)
+        bert_classifier = pickle.load(open(MODEL, 'rb'))
+        optimizer = AdamW(bert_classifier.parameters(),
+                    lr=5e-5,    # Default learning rate
+                    eps=1e-8    # Default epsilon value
+                    )
+        epochs=2
+        # Total number of training steps
+        total_steps = len(train_dataloader) * epochs
+
+        # Set up the learning rate scheduler
+        scheduler = get_linear_schedule_with_warmup(optimizer,
+                                                  num_warmup_steps=0, # Default value
+                                                  num_training_steps=total_steps)
+
+
+        train(bert_classifier, train_dataloader, val_dataloader, epochs, evaluation=True)
         pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))
