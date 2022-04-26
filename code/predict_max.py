@@ -32,6 +32,7 @@ def get_predictions(PROBS_FILE, TEST_FILE, PRED_FILE):
         
     # for export 
     test_pred = pd.read_json( '../data/raw/'+TEST_FILE, lines=True)
+    test_pred = test_pred[-100:]
     test_pred['sentiment'] = y_hat
     
     #Write in a way that codalabs will accept. Thanks to Nicola.

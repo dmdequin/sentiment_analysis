@@ -279,9 +279,11 @@ if __name__ == '__main__':
     import sys
     args = sys.argv #NEW, train, val, MODEL, MODEL_NAME
     '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None model_name(required)
-    python3 baseline.py 1 '../data/interim/train.csv' '../data/interim/dev.csv' None 'TEST'
+    Examples:
+    python3 baseline.py 1 '../data/interim/train.csv' '../data/interim/dev.csv' None '_TEST'
+    python3 baseline.py 0 '../data/interim/train.csv' '../data/interim/dev.csv' models/modelTEST.pkl '_TEST2'
     '''
-    print(args)
+    #print(args)
     NEW = int(args[1])
     TRAIN = args[2]
     DEV = args[3]
