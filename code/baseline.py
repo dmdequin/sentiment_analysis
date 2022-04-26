@@ -6,15 +6,13 @@ import torch
 from transformers import BertTokenizer
 from datetime import datetime
 import pickle
-import torch
+from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+import random
+import time
 
-
-TRAIN = '../data/interim/train.csv'
-DEV   = '../data/interim/dev.csv'
-TEST  = '../data/interim/test.csv'
-
-now = datetime.now()
-current_time = now.strftime("_%d%m%Y_%H%M%S")
+#TRAIN = '../data/interim/train.csv'
+#DEV   = '../data/interim/dev.csv'
+#TEST  = '../data/interim/test.csv'
 
 ## functions
 def loader(PATH):
@@ -33,34 +31,6 @@ def splitter(L):
         y.append(int(i[1]))
         
     return X, y
-
-if torch.cuda.is_available():       
-    device = torch.device("cuda")
-    #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
-    #print('Device name:', torch.cuda.get_device_name(0))
-
-else:
-    #print('No GPU available, using the CPU instead.')
-    device = torch.device("cpu")
-
-# load data
-train_data = loader(TRAIN) # Training
-dev_data = loader(DEV)     # Validation
-#X_test = loader(TEST)      # Test
-
-#train_data = train_data[0:100]
-#dev_data = dev_data[0:100]
-
-X_train, y_train = splitter(train_data)
-X_dev, y_dev = splitter(dev_data)
-
-MAX_LEN = 512
-
-# tokenise with BERT
-from transformers import BertTokenizer
-
-# Load the BERT tokenizer
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
 
 # Create a function to tokenize a set of texts
 def preprocessing_for_bert(data):
@@ -102,34 +72,6 @@ def preprocessing_for_bert(data):
     attention_masks = torch.tensor(attention_masks)
 
     return input_ids, attention_masks
-
-# Encode our concatenated data
-encoded_ = [tokenizer.encode(sent, add_special_tokens=True) for sent in X_train]
-
-# Run function `preprocessing_for_bert` on the train set and the validation set
-#print('Tokenizing data...')
-train_inputs, train_masks = preprocessing_for_bert(X_train)
-val_inputs, val_masks = preprocessing_for_bert(X_dev)
-
-# BERT model defs
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
-# Convert other data types to torch.Tensor
-train_labels = torch.tensor(y_train)
-val_labels = torch.tensor(y_dev)
-
-# For fine-tuning BERT, the authors recommend a batch size of 16 or 32.
-batch_size = 2
-
-# Create the DataLoader for our training set
-train_data = TensorDataset(train_inputs, train_masks, train_labels)
-train_sampler = RandomSampler(train_data)
-train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
-
-# Create the DataLoader for our validation set
-val_data = TensorDataset(val_inputs, val_masks, val_labels)
-val_sampler = SequentialSampler(val_data)
-val_dataloader = DataLoader(val_data, sampler=val_sampler, batch_size=batch_size)
 
 # trainer
 import torch.nn as nn
@@ -211,14 +153,6 @@ def initialize_model(epochs=4):
                                                 num_warmup_steps=0, # Default value
                                                 num_training_steps=total_steps)
     return bert_classifier, optimizer, scheduler
-
-# train and eval?
-
-import random
-import time
-
-# Specify loss function
-loss_fn = nn.CrossEntropyLoss()
 
 def set_seed(seed_value=42):
     """Set seed for reproducibility.
@@ -340,8 +274,89 @@ def evaluate(model, val_dataloader):
 
     return val_loss, val_accuracy
 
-set_seed(42)    # Set seed for reproducibility
-bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
-train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
 
-pickle.dump(bert_classifier, open('models/model'+'_ALL_ALL'+'.pkl', 'wb'))
+if __name__ == '__main__':
+    import sys
+    args = sys.argv #NEW, train, val, MODEL, MODEL_NAME
+    '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None model_name(required)
+    python3 baseline.py 1 '../data/interim/train.csv' '../data/interim/dev.csv' None 'TEST'
+    '''
+    print(args)
+    NEW = int(args[1])
+    TRAIN = args[2]
+    DEV = args[3]
+    MODEL = args[4]
+    MODEL_NAME = args[5]
+
+    # load data
+    train_data = loader(TRAIN) # Training
+    dev_data = loader(DEV)     # Validation
+    #X_test = loader(TEST)      # Test
+
+    train_data = train_data[0:100]
+    dev_data = dev_data[0:100]
+
+    X_train, y_train = splitter(train_data)
+    X_dev, y_dev = splitter(dev_data)
+
+    if torch.cuda.is_available():       
+        device = torch.device("cuda")
+        #print(f'There are {torch.cuda.device_count()} GPU(s) available.')
+        #print('Device name:', torch.cuda.get_device_name(0))
+
+    else:
+        #print('No GPU available, using the CPU instead.')
+        device = torch.device("cpu")
+
+    MAX_LEN = 512
+    now = datetime.now()
+    current_time = now.strftime("_%d%m%Y_%H%M%S")
+
+    # Load the BERT tokenizer
+    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+
+    # Encode our concatenated data
+    encoded_ = [tokenizer.encode(sent, add_special_tokens=True) for sent in X_train]
+
+    # Run function `preprocessing_for_bert` on the train set and the validation set
+    #print('Tokenizing data...')
+
+    train_inputs, train_masks = preprocessing_for_bert(X_train)
+    val_inputs, val_masks = preprocessing_for_bert(X_dev)
+
+
+    # Specify loss function
+    loss_fn = nn.CrossEntropyLoss()
+
+    # Convert other data types to torch.Tensor
+    train_labels = torch.tensor(y_train)
+    val_labels = torch.tensor(y_dev)
+
+    # For fine-tuning BERT, the authors recommend a batch size of 16 or 32.
+    batch_size = 2
+
+    # Create the DataLoader for our training set
+    train_data = TensorDataset(train_inputs, train_masks, train_labels)
+    train_sampler = RandomSampler(train_data)
+    train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
+
+    # Create the DataLoader for our validation set
+    val_data = TensorDataset(val_inputs, val_masks, val_labels)
+    val_sampler = SequentialSampler(val_data)
+    val_dataloader = DataLoader(val_data, sampler=val_sampler, batch_size=batch_size)
+
+    set_seed(42)    # Set seed for reproducibility
+
+
+
+    if NEW:
+        print('New model being trained')
+        bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
+        train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
+        pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))
+
+    elif NEW:
+        print('loading model')
+        pickle.load(model, MODEL)
+        train(model, train_dataloader, val_dataloader, epochs=2, evaluation=True)
+        pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))
