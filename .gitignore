@@ -5,3 +5,5 @@ data/raw/music_reviews_test_masked.json
 data/raw/music_reviews_train.json
 sabrina/archive/sab_model.pkl
 sabrina/Video_Games_5.json.gz
+sabrina/Video_Games_5.json
+sabrina/workdir/.0
