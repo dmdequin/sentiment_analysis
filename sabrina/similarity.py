@@ -10,7 +10,7 @@ def tokenize(string):
     sentences = sent_tokenize(string)
     # sentences = string.lower()
 
-    # list of lists, words as tokens for corpus 1
+    # list of lists of strings - each string in the sublist is a word
     tokens = [[word.lower() for word in word_tokenize(text)] for text in sentences]
     # tokens = [word_tokenize(sentences)]
 
