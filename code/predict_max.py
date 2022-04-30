@@ -2,10 +2,10 @@ import numpy as np
 import json
 import pandas as pd
 
-def get_predictions(PROBS_FILE, TEST_FILE, PRED_FILE):
+def get_predictions(PROBS_FILE, PRED_FILE,TEST_FILE=None,):
     # Get predictions from the probabilities
     probs = []
-    with open('../data/probabilities/' + PROBS_FILE, 'r') as f:
+    with open('../data/probabilities/' + PROBS_FILE + '.csv', 'r') as f:
         temp = (f.read().split(','))
         for i in temp[:-1]:
             #print('i', i)
@@ -23,7 +23,11 @@ def get_predictions(PROBS_FILE, TEST_FILE, PRED_FILE):
     preds = np.argmax(probs, axis=1)
     #print(preds)
 
-    # convert 0s and 1s into strings
+    with open ('../data/predictions/'+PRED_FILE+'.csv', 'w') as f:
+        for i in preds:
+            f.writelines(str(i)+',')
+
+'''    # convert 0s and 1s into strings
     y_hat = []
     for i in preds:
         if i:
@@ -39,7 +43,7 @@ def get_predictions(PROBS_FILE, TEST_FILE, PRED_FILE):
     new = test_pred.to_dict('records')
     test_json=[json.dumps(i)+'\n' for i in new]
     with open ('../data/predictions/'+PRED_FILE+'.json', 'w') as file:
-        file.writelines(test_json)
+        file.writelines(test_json)'''
 
 
 if __name__ == '__main__':
@@ -47,6 +51,10 @@ if __name__ == '__main__':
     args = sys.argv
     #print(args[1])
     PROB = args[1]       # probabilities file
-    TEST_DATA = args[2]  # test data            # 'music_reviews_test_masked.json.gz'
-    PRED = args[3]       # prediction file name # 'music_reviews_test_argmax'
-    get_predictions(PROB, TEST_DATA, PRED)
+    PRED = args[2]       # prediction file name # 'music_reviews_test_argmax'
+    if len(args) > 3:
+        TEST_DATA = args[3]  # test data            # 'music_reviews_test_masked.json.gz'
+    else:
+        TEST_DATA == None
+
+    get_predictions(PROB, PRED, TEST_DATA,)
