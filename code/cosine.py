@@ -5,11 +5,18 @@ import sys
 import pandas as pd
 import numpy as np
 import heapq
+import sys
 
 import gensim
 
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+
+args = sys.argv
+if len(args) < 2:
+    print("You forgot to enter the file")
+CORPUS = args[1]  # 
+FILE = args[2] 
 
 #####################################################
 # Functions

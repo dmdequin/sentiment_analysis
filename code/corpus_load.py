@@ -105,12 +105,12 @@ data.drop('sentiment', axis=1, inplace=True)
 
 #######################################################
 # Train, Dev, Test, Split
-train, test = train_test_split(data, test_size=0.2, stratify=data['label'], random_state=42)
+train, test = train_test_split(data, test_size=10000, stratify=data['label'], random_state=42)
 train, val = train_test_split(train, test_size=0.2, stratify=train['label'], random_state=42)
 
-#print(len(train))
-#print(len(val))
-#print(len(test))
+print(f"Length Train: {len(train)}")
+print(f"Length Val: {len(val)}")
+print(f"Length Test: {len(test)}")
 #print(data['label'].value_counts())
 
 #######################################################
