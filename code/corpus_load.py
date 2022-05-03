@@ -115,9 +115,9 @@ print(f"Length Test: {len(test)}")
 
 #######################################################
 # save to csv
-train.to_csv('../data/interim/' + FILE + '_train.csv', index=False)
-val.to_csv('../data/interim/' + FILE + '_val.csv', index=False)
-test.to_csv('../data/interim/' + FILE + '_test.csv', index=False)
+train.to_csv('../data/interim/' + FILE + '_train.csv', index=False, header=False)
+val.to_csv('../data/interim/' + FILE + '_val.csv', index=False, header=False)
+test.to_csv('../data/interim/' + FILE + '_test.csv', index=False, header=False)
 
 
 # Load Interim CSV file
