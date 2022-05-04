@@ -21,7 +21,7 @@ def loader(PATH):
         text = []
         for lines in csvFile:
             text.append(lines)
-    return text
+    return text[1:]
 
 def splitter(L):
     X = []
@@ -277,8 +277,8 @@ def evaluate(model, val_dataloader):
 
 if __name__ == '__main__':
     import sys
-    args = sys.argv #NEW, train, val, MODEL, MODEL_NAME
-    '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None model_name(required)
+    args = sys.argv #NEW, train, val, MODEL, new_MODEL_NAME
+    '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None new_model_name(required)
     Examples:
     python3 baseline.py 1 '../data/interim/train.csv' '../data/interim/dev.csv' None '_TEST'
     python3 baseline.py 0 '../data/interim/train.csv' '../data/interim/dev.csv' models/modelTEST.pkl '_TEST2'
