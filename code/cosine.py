@@ -30,6 +30,7 @@ FILE_2 = args[2]        # name of corpus file to select training samples. For ex
 FILE_NAME = args[3]     # name of corpus category. For example: 'sew'
 N_DIS = int(args[4])    # number of dissimilar embeddings to select
 # python3 cosine.py 'music_train' 'games_train' 'games' 10000
+# python3 cosine.py 'music_train' 'sew_train' 'sew' 10000
 
 #####################################################
 # Load base corpus file and split into X and y
@@ -85,7 +86,7 @@ for i in tqdm(range(1,len(X_2))): # start at 1 because 0 is "Review"
     
     # Average Similarity score
     sum_of_sims =(np.sum(doc_sim, dtype=np.float32)) # find average similarity
-    sim_ave = round(sum_of_sims/len(corp_1), 2)      # round
+    sim_ave = sum_of_sims/len(corp_1)                # round (removed the rounding to see if that changes things)
     avg_sims.append((sim_ave, i))                    # append (similarity, sentence index)
     
     #print(f"Average Similarity: {sim_ave}")
@@ -101,11 +102,11 @@ most_dis = []
 count = 0
 while count <= 10000:
     for tup in pq:
-        most_dis.append((X_2.iloc[tup[1]]['review'], y_2.iloc[tup[1]]['sentiment']))
+        most_dis.append((X_2.iloc[tup[1]]['review'], y_2.iloc[tup[1]]['sentiment'], tup[0], tup[1]))
         count += 1
 
 # Convert to data frame
-most_dis = pd.DataFrame(most_dis, columns=['review','sentiment'])
+most_dis = pd.DataFrame(most_dis, columns=['review','sentiment','cosine_score','orig_index'])
 
 top_10 = most_dis[0:10]
 top_100 = most_dis[0:100]
