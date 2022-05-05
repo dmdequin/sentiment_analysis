@@ -93,6 +93,12 @@ for i in tqdm(range(1,len(X_2))): # start at 1 because 0 is "Review"
     
 print("Done!")
 
+# Save File of Only Similarity Scores for all Training Samples
+sims_only = [sim[0] for sim in avg_sims]
+sims_only = pd.DataFrame(sims_only, columns=['similarity'])
+sims_only.to_csv('../data/dissimilar/'+FILE_NAME+'_sim_score.csv', index=False, header=False)
+
+
 print("Starting PQ")
 # Priority queue of most dissimilar sentences
 pq = heapq.nsmallest(N_DIS, avg_sims, key=None) # size of heap, similarity score list to iterate through
