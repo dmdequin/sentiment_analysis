@@ -276,6 +276,8 @@ def evaluate(model, val_dataloader):
 
 
 if __name__ == '__main__':
+    print('Bananananana!')
+
     import sys
     args = sys.argv #NEW, train, val, MODEL, new_MODEL_NAME
     '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None new_model_name(required)
@@ -375,4 +377,5 @@ if __name__ == '__main__':
 
 
         train(bert_classifier, train_dataloader, val_dataloader, epochs, evaluation=True)
+        print(f'saving new model: {MODEL_NAME}')
         pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))

@@ -4,7 +4,7 @@ from baseline import *
 import torch
 
 def make_probs(MODEL,TEST_FILE, PROBS_FILE):
-
+    print('making probs')
     batch_size = 2
 
     if torch.cuda.is_available():       
@@ -15,7 +15,7 @@ def make_probs(MODEL,TEST_FILE, PROBS_FILE):
         #print('No GPU available, using the CPU instead.')
         device = torch.device("cpu")
 
-    X_test = loader('../data/interim/'+TEST_FILE) 
+    X_test = loader('/data/dissimilar/'+TEST_FILE) 
     X_test = X_test[:-1]
     ### Remove this line to run predictions on the entire test file. It will take AGES!!
     '''X_test = X_test[:1000]'''

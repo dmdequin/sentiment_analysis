@@ -3,6 +3,7 @@ import json
 import pandas as pd
 
 def get_predictions(PROBS, PRED_FILE):
+    print('making predictions')
     # Get predictions from the probabilities
     probs = []
     for p in PROBS:

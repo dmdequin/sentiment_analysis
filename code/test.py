@@ -7,7 +7,7 @@ TRIAL = 'games_base' ##We need a consistent naming convention here.
 TEST_FILE = TRIAL[:-4] + '_test.csv' '''
 
 MODEL = 'model_base.pkl'
-TEST_FILE = 'sew_test.csv' 
+TEST_FILE = 'games_test.csv'
 PROBS_NAME = TRIAL + '_probs'
 PREDS_NAME = TRIAL + '_preds'
 
