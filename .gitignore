@@ -6,4 +6,8 @@ data/raw/music_reviews_train.json
 sabrina/archive/sab_model.pkl
 sabrina/Video_Games_5.json.gz
 sabrina/Video_Games_5.json
-sabrina/workdir/.0
+sabrina/Arts_Crafts_and_Sewing_5.json
+sabrina/Arts_Crafts_and_Sewing_5.json.gz
+sabrina/Digital_Music_5.json
+sabrina/Digital_Music_5.json.gz
+sabrina/workdir/
