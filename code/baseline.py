@@ -21,7 +21,7 @@ def loader(PATH):
         text = []
         for lines in csvFile:
             text.append(lines)
-    return text
+    return text[1:]
 
 def splitter(L):
     X = []
@@ -33,7 +33,7 @@ def splitter(L):
     return X, y
 
 # Create a function to tokenize a set of texts
-def preprocessing_for_bert(data):
+def preprocessing_for_bert(data, MAX_LEN=512):
     """Perform required preprocessing steps for pretrained BERT.
     @param    data (np.array): Array of texts to be processed.
     @return   input_ids (torch.Tensor): Tensor of token ids to be fed to a model.
@@ -43,7 +43,7 @@ def preprocessing_for_bert(data):
     # Create empty lists to store outputs
     input_ids = []
     attention_masks = []
-
+    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
     # For every sentence...
     for sent in data:
         # `encode_plus` will:
@@ -56,7 +56,7 @@ def preprocessing_for_bert(data):
         encoded_sent = tokenizer.encode_plus(
             text=sent,  # Preprocess sentence
             add_special_tokens=True,        # Add `[CLS]` and `[SEP]`
-            max_length=512,             # Max length to truncate/pad
+            max_length=MAX_LEN,             # Max length to truncate/pad
             padding='max_length',           # Pad sentence to max length
             #return_tensors='pt',           # Return PyTorch tensor
             return_attention_mask=True,     # Return attention mask
@@ -277,8 +277,8 @@ def evaluate(model, val_dataloader):
 
 if __name__ == '__main__':
     import sys
-    args = sys.argv #NEW, train, val, MODEL, MODEL_NAME
-    '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None model_name(required)
+    args = sys.argv #NEW, train, val, MODEL, new_MODEL_NAME
+    '''To call: baseline.py 0/1 training_data_path val_data_path model_or_None new_model_name(required)
     Examples:
     python3 baseline.py 1 '../data/interim/train.csv' '../data/interim/dev.csv' None '_TEST'
     python3 baseline.py 0 '../data/interim/train.csv' '../data/interim/dev.csv' models/modelTEST.pkl '_TEST2'
@@ -295,8 +295,8 @@ if __name__ == '__main__':
     dev_data = loader(DEV)     # Validation
     #X_test = loader(TEST)      # Test
 
-    train_data = train_data[101:120]
-    dev_data = dev_data[101:120]
+    #train_data = train_data[101:120]
+    #dev_data = dev_data[101:120]
 
     X_train, y_train = splitter(train_data)
     X_dev, y_dev = splitter(dev_data)
