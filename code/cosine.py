@@ -9,19 +9,16 @@ import sys
 from tqdm import tqdm
 import time
 import gensim
-
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 start_time = time.time()
 
-#####################################################
 # Functions
 def csv_loader(PATH):
     text = pd.read_csv(PATH, names=['review','sentiment']) 
     return text
 
-#####################################################
 args = sys.argv
 if len(args) < 2:
     print("You forgot something")
@@ -32,18 +29,17 @@ N_DIS = int(args[4])    # number of dissimilar embeddings to select
 # python3 cosine.py 'music_train' 'games_train' 'games' 10000
 # python3 cosine.py 'music_train' 'sew_train' 'sew' 10000
 
-#####################################################
 # Load base corpus file and split into X and y
 data_1 = csv_loader('../data/interim/' + FILE_1 + '.csv')
 #data_1 = data_1[0:10]
 X_1, y_1 = data_1[['review']], data_1[['sentiment']]
 
-# Load Second Interim CSV file and split into X and y
+# Load Second corpus CSV file and split into X and y
 data_2 = csv_loader('../data/interim/' + FILE_2 + '.csv')
 #data_2 = data_2[0:10]
 X_2, y_2 = data_2[['review']], data_2[['sentiment']]
 
-#####################################################
+# define stop words
 stop_words = set(stopwords.words('english'))
 
 # Tokenize each review and lowercase everything
@@ -67,7 +63,7 @@ tf_idf = gensim.models.TfidfModel(corpus)
 sims = gensim.similarities.Similarity('workdir/',tf_idf[corpus],
                                         num_features=len(dictionary))
 
-#############################################################
+# tokenize second corpus, lowercase, and compute similarity
 corp_2 = []
 avg_sims = [] # array of averages
 print("Starting Sentence Comparison")
@@ -82,15 +78,12 @@ for i in tqdm(range(1,len(X_2))): # start at 1 because 0 is "Review"
     query_doc_tf_idf = tf_idf[query_doc_bow]
     
     doc_sim = sims[query_doc_tf_idf]
-    #print(f"Comparing Similarity: {doc_sim}")
     
     # Average Similarity score
     sum_of_sims =(np.sum(doc_sim, dtype=np.float32)) # find average similarity
     sim_ave = sum_of_sims/len(corp_1)                # round (removed the rounding to see if that changes things)
     avg_sims.append((sim_ave, i))                    # append (similarity, sentence index)
-    
-    #print(f"Average Similarity: {sim_ave}")
-    
+        
 print("Done!")
 
 # Save File of Only Similarity Scores for all Training Samples
@@ -98,9 +91,8 @@ sims_only = [sim[0] for sim in avg_sims]
 sims_only = pd.DataFrame(sims_only, columns=['similarity'])
 sims_only.to_csv('../data/dissimilar/'+FILE_NAME+'_sim_score.csv', index=False, header=False)
 
-
-print("Starting PQ")
 # Priority queue of most dissimilar sentences
+print("Starting PQ")
 pq = heapq.nsmallest(N_DIS, avg_sims, key=None) # size of heap, similarity score list to iterate through
 
 # List of most dissimilar sentences
