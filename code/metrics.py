@@ -35,17 +35,18 @@ if __name__ == '__main__':
 	args = sys.argv
 	#print(args)
 	things = args[1:]
-
+	print(things)
 	for l in things:
 
 		print(f'{l} data:')
-		subject = pd.read_csv(f'../data/predictions/{l}_preds.csv', header=None)
+		subject = pd.read_csv(f'../data/predictions/{l}_preds.csv', header=None, sep=',')
+		
 		subject = subject.T
 		subject = subject[:-1]
 		print(f'\nThere are {int(sum(subject[0]))} predicted positives')
 		#print(subject.shape)
 
-		subject_true = pd.read_csv(f'../data/interim/{l[:-5]}_test.csv')
+		subject_true = pd.read_csv(f'../data/interim/{l[:-8]}_test.csv')
 		#subject_true = subject_true[:1000]
 		subject_true = subject_true['label']
 		print(f'There are {sum(subject_true)} true positives')
@@ -60,8 +61,8 @@ if __name__ == '__main__':
 		print(f'\nAccuracy:        {acc}%')
 		print(f'True positives:  {pc}')
 		print(f'True negatives:  {nc}')
-		print(f'False positives: {pw}')
-		print(f'False negatives: {nw}')
+		print(f'False positives: {nw}')
+		print(f'False negatives: {pw}')
 
 		f1 = f1_score(subject_true, subject[0], average='weighted')
 		print(f'F1:              {round(f1, 3)}')
