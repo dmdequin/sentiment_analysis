@@ -16,7 +16,7 @@ def make_probs(MODEL,TEST_FILE, PROBS_FILE):
         device = torch.device("cpu")
 
     X_test = loader('../data/interim/'+TEST_FILE) 
-    X_test = X_test[:-1]
+    #X_test = X_test[:-1]
     ### Remove this line to run predictions on the entire test file. It will take AGES!!
     '''X_test = X_test[:1000]'''
     ###
