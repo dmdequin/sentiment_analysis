@@ -34,19 +34,20 @@ def comparerer(truth, predictions):
 if __name__ == '__main__':
 	args = sys.argv
 	#print(args)
-	things = args[1:]
+	dom = args[1]
+	things = args[2:]
 	#print(things)
 	for l in things:
 
-		print(f'{l} data:')
-		subject = pd.read_csv(f'../data/predictions/{l}_preds.csv', header=None, sep=',')
+		print(f'{dom}_{l} data:')
+		subject = pd.read_csv(f'../data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
 		
 		subject = subject.T
 		subject = subject[:-1]
 		print(f'\nThere are {int(sum(subject[0]))} predicted positives')
 		#print(subject.shape)
 
-		subject_true = pd.read_csv(f'../data/interim/{l[:-8]}_test.csv')
+		subject_true = pd.read_csv(f'../data/interim/{dom}_test.csv')
 		#subject_true = subject_true[:1000]
 		subject_true = subject_true['label']
 		print(f'There are {sum(subject_true)} true positives')
