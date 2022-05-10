@@ -35,7 +35,7 @@ if __name__ == '__main__':
 	args = sys.argv
 	#print(args)
 	things = args[1:]
-	print(things)
+	#print(things)
 	for l in things:
 
 		print(f'{l} data:')
