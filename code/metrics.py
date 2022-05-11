@@ -31,12 +31,18 @@ def comparerer(truth, predictions):
 
 		return pos_correct, pos_wrong, neg_correct, neg_wrong, (100*(pos_correct+neg_correct))/len(truth)
 
+
 if __name__ == '__main__':
 	args = sys.argv
 	#print(args)
 	dom = args[1]
 	things = args[2:]
 	#print(things)
+	
+	# initialising empty dataframe to concat results
+	columns = ['model', 'correctly predicted', 'incorrectly predicted', 'total predicted positives', 'num of positives in ground truth', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
+	df = pd.DataFrame(columns=columns)
+	
 	for l in things:
 
 		print(f'{dom}_{l} data:')
@@ -76,3 +82,28 @@ if __name__ == '__main__':
 
 
 		print('\n' + '-'*50 + '\n')
+
+		# saved the dict as it might be useful
+		# dict_metrics = {
+		# 	'model' : f'{dom}_{l}',
+		# 	'correctly predicted' : pc + nc,
+		# 	'incorrectly predicted' : pw + nw,
+		# 	'total predicted positives' : int(sum(subject[0])),
+		# 	'num of positives in ground truth' : sum(subject_true),
+		# 	'TP' : pc,
+		# 	'TN' : nc,
+		# 	'FP' : nw,
+		# 	'FN' : pw,
+		# 	'accuracy' : acc,
+		# 	'precision' : p,
+		# 	'recall' : r,
+		# 	'f1' : f1
+		# }
+
+		data = {f'{dom}_{l}': [pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
+		df2 = pd.DataFrame.from_dict(data, orient='index')
+
+		pd.concat([df, df2], ignore_index = True)
+	
+	filename = f'{dom}_{l}_metrics.csv'
+	df.to_csv(filename)
