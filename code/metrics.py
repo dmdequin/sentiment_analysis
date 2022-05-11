@@ -103,7 +103,7 @@ if __name__ == '__main__':
 		data = {f'{dom}_{l}': [pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
 		df2 = pd.DataFrame.from_dict(data, orient='index')
 
-		pd.concat([df, df2], ignore_index = True)
+		df = pd.concat([df, df2], ignore_index = True)
 	
-	filename = f'{dom}_{l}_metrics.csv'
+	filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
 	df.to_csv(filename)
