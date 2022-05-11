@@ -3,7 +3,7 @@ code/.ipynb_checkpoints/data_prep-checkpoint.ipynb
 data/raw/music_reviews_dev.json
 data/raw/music_reviews_test_masked.json
 data/raw/music_reviews_train.json
-sabrina/archive/sab_model.pkl
+sabrina/archive/
 sabrina/Video_Games_5.json.gz
 sabrina/Video_Games_5.json
 sabrina/Arts_Crafts_and_Sewing_5.json
