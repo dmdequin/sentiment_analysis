@@ -42,9 +42,8 @@ if __name__ == '__main__':
 	# initialising empty dataframe to concat results
 	columns = ['model', 'correctly predicted', 'incorrectly predicted', 'total predicted positives', 'num of positives in ground truth', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
 	df = pd.DataFrame(columns=columns)
-	
-	for l in things:
 
+	for l in things:
 		print(f'{dom}_{l} data:')
 		subject = pd.read_csv(f'../data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
 		
@@ -100,10 +99,10 @@ if __name__ == '__main__':
 		# 	'f1' : f1
 		# }
 
-		data = {f'{dom}_{l}': [pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
-		df2 = pd.DataFrame.from_dict(data, orient='index')
-
+		data = {f'{dom}_{l}': [f'{dom}_{l}', pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
+		df2 = pd.DataFrame.from_dict(data, orient='index', columns=columns)
+		#print(df2)
 		df = pd.concat([df, df2], ignore_index = True)
-	
+	#print (df)
 	filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
 	df.to_csv(filename)
