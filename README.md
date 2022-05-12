@@ -5,27 +5,11 @@ This repository contains the work for a three phase project in Natural Language 
 
 ## Getting Started
 
-The language used in this project is Python Version 3.8.?...
+The language used in this project is Python Version 3.8.2
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+Please see requirements.txt for libraries and versions
 
 ## Built With
 
@@ -38,10 +22,6 @@ Group 12
 * Danielle Dequin ddeq@itu.dk
 * Chrisanna Cornish ccor@itu.dk
 * Sabrina Pereira sabf@itu.dk
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
