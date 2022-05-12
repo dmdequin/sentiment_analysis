@@ -160,6 +160,78 @@ Recall:          0.942
 
 --------------------------------------------------
 
+sew_00010es data:
+
+There are 9185 predicted positives
+There are 9417 true positives
+There are 8658 correct
+There are 1342 incorrect
+
+Accuracy:        86.58%
+True positives:  8630
+True negatives:  28
+False positives: 555
+False negatives: 787
+F1:              0.876
+Precision:       0.887
+Recall:          0.866
+
+--------------------------------------------------
+
+sew_00100es data:
+
+There are 9332 predicted positives
+There are 9417 true positives
+There are 9661 correct
+There are 339 incorrect
+
+Accuracy:        96.61%
+True positives:  9205
+True negatives:  456
+False positives: 127
+False negatives: 212
+F1:              0.967
+Precision:       0.969
+Recall:          0.966
+
+--------------------------------------------------
+
+sew_01000es data:
+
+There are 8684 predicted positives
+There are 9417 true positives
+There are 9185 correct
+There are 815 incorrect
+
+Accuracy:        91.85%
+True positives:  8643
+True negatives:  542
+False positives: 41
+False negatives: 774
+F1:              0.933
+Precision:       0.961
+Recall:          0.918
+
+--------------------------------------------------
+
+sew_10000es data:
+
+There are 8947 predicted positives
+There are 9417 true positives
+There are 9420 correct
+There are 580 incorrect
+
+Accuracy:        94.2%
+True positives:  8892
+True negatives:  528
+False positives: 55
+False negatives: 525
+F1:              0.95
+Precision:       0.965
+Recall:          0.942
+
+--------------------------------------------------
+
 sew_00010ra data:
 
 There are 8627 predicted positives
@@ -232,4 +304,3 @@ Recall:          0.968
 
 --------------------------------------------------
 
-['ba' 'cp' 're' 'ra']

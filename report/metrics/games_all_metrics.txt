@@ -160,6 +160,78 @@ Recall:          0.895
 
 --------------------------------------------------
 
+games_00010es data:
+
+There are 6811 predicted positives
+There are 8773 true positives
+There are 7936 correct
+There are 2064 incorrect
+
+Accuracy:        79.36%
+True positives:  6760
+True negatives:  1176
+False positives: 51
+False negatives: 2013
+F1:              0.826
+Precision:       0.916
+Recall:          0.794
+
+--------------------------------------------------
+
+games_00100es data:
+
+There are 6953 predicted positives
+There are 8773 true positives
+There are 8076 correct
+There are 1924 incorrect
+
+Accuracy:        80.76%
+True positives:  6901
+True negatives:  1175
+False positives: 52
+False negatives: 1872
+F1:              0.837
+Precision:       0.918
+Recall:          0.808
+
+--------------------------------------------------
+
+games_01000es data:
+
+There are 7550 predicted positives
+There are 8773 true positives
+There are 8581 correct
+There are 1419 incorrect
+
+Accuracy:        85.81%
+True positives:  7452
+True negatives:  1129
+False positives: 98
+False negatives: 1321
+F1:              0.876
+Precision:       0.922
+Recall:          0.858
+
+--------------------------------------------------
+
+games_10000es data:
+
+There are 10000 predicted positives
+There are 8773 true positives
+There are 8773 correct
+There are 1227 incorrect
+
+Accuracy:        87.73%
+True positives:  8773
+True negatives:  0
+False positives: 1227
+False negatives: 0
+F1:              0.82
+Precision:       0.77
+Recall:          0.877
+
+--------------------------------------------------
+
 games_00010ra data:
 
 There are 7303 predicted positives
@@ -232,4 +304,3 @@ Recall:          0.877
 
 --------------------------------------------------
 
-['ba' 'cp' 're' 'ra']
