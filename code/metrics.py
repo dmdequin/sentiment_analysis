@@ -42,45 +42,47 @@ if __name__ == '__main__':
 	# initialising empty dataframe to concat results
 	columns = ['model', 'correctly predicted', 'incorrectly predicted', 'total predicted positives', 'num of positives in ground truth', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
 	df = pd.DataFrame(columns=columns)
+	print_state = True
 
-	for l in things:
-		print(f'{dom}_{l} data:')
-		subject = pd.read_csv(f'../data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
-		
-		subject = subject.T
-		subject = subject[:-1]
-		print(f'\nThere are {int(sum(subject[0]))} predicted positives')
-		#print(subject.shape)
+	for l in things: 		
+		if print_state == True:
+			print(f'{dom}_{l} data:')
+			subject = pd.read_csv(f'../data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
+			
+			subject = subject.T
+			subject = subject[:-1]
+			print(f'\nThere are {int(sum(subject[0]))} predicted positives')
+			#print(subject.shape)
 
-		subject_true = pd.read_csv(f'../data/interim/{dom}_test.csv')
-		#subject_true = subject_true[:1000]
-		subject_true = subject_true['label']
-		print(f'There are {sum(subject_true)} true positives')
-		#print(sew_full.shape)
+			subject_true = pd.read_csv(f'../data/interim/{dom}_test.csv')
+			#subject_true = subject_true[:1000]
+			subject_true = subject_true['label']
+			print(f'There are {sum(subject_true)} true positives')
+			#print(sew_full.shape)
 
-		pc, pw, nc, nw, acc = comparerer(subject_true, subject[0])
+			pc, pw, nc, nw, acc = comparerer(subject_true, subject[0])
 
-		
-		print(f'There are {pc + nc} correct')
-		print(f'There are {pw + nw} incorrect')
+			
+			print(f'There are {pc + nc} correct')
+			print(f'There are {pw + nw} incorrect')
 
-		print(f'\nAccuracy:        {acc}%')
-		print(f'True positives:  {pc}')
-		print(f'True negatives:  {nc}')
-		print(f'False positives: {nw}')
-		print(f'False negatives: {pw}')
+			print(f'\nAccuracy:        {acc}%')
+			print(f'True positives:  {pc}')
+			print(f'True negatives:  {nc}')
+			print(f'False positives: {nw}')
+			print(f'False negatives: {pw}')
 
-		f1 = f1_score(subject_true, subject[0], average='weighted')
-		print(f'F1:              {round(f1, 3)}')
+			f1 = f1_score(subject_true, subject[0], average='weighted')
+			print(f'F1:              {round(f1, 3)}')
 
-		p = precision_score(subject_true, subject[0], average='weighted')
-		print(f'Precision:       {round(p,3)}')
+			p = precision_score(subject_true, subject[0], average='weighted')
+			print(f'Precision:       {round(p,3)}')
 
-		r = recall_score(subject_true, subject[0], average='weighted')
-		print(f'Recall:          {round(r,3)}')
+			r = recall_score(subject_true, subject[0], average='weighted')
+			print(f'Recall:          {round(r,3)}')
 
 
-		print('\n' + '-'*50 + '\n')
+			print('\n' + '-'*50 + '\n')
 
 		# saved the dict as it might be useful
 		# dict_metrics = {
@@ -105,4 +107,5 @@ if __name__ == '__main__':
 		df = pd.concat([df, df2], ignore_index = True)
 	#print (df)
 	filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
-	df.to_csv(filename)
+	# filename = 'test.csv'
+	df.to_csv(filename, index=False)
