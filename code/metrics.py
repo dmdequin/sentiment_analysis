@@ -40,7 +40,7 @@ if __name__ == '__main__':
 	#print(things)
 	
 	# initialising empty dataframe to concat results
-	columns = ['model', 'correctly predicted', 'incorrectly predicted', 'total predicted positives', 'num of positives in ground truth', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
+	columns = ['domain', 'trial_type', 'add_data', 'correctly_predicted', 'incorrectly_predicted', 'total_predicted_positives', 'ground_truth_positives', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
 	df = pd.DataFrame(columns=columns)
 	print_state = True
 
@@ -101,11 +101,15 @@ if __name__ == '__main__':
 		# 	'f1' : f1
 		# }
 
-		data = {f'{dom}_{l}': [f'{dom}_{l}', pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
+		data = {f'{dom}_{l}': [f'{dom}', f'{l[-2:]}', f'{l[-7:-2]}', pc + nc, pw + nw, int(sum(subject[0])), sum(subject_true), pc, nc, nw, pw, acc, p, r, f1]}
 		df2 = pd.DataFrame.from_dict(data, orient='index', columns=columns)
 		#print(df2)
 		df = pd.concat([df, df2], ignore_index = True)
 	#print (df)
-	filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
+	
+	if len(df['trial_type'].unique()) > 2:
+		filename = f'../report/metrics/{dom}_mixed_metrics.csv'
+	else:
+		filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
 	# filename = 'test.csv'
 	df.to_csv(filename, index=False)
