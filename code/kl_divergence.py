@@ -19,6 +19,7 @@ if len(args) < 2:
 FILE_1 = args[1]  # name of interim csv file. For example: # games_train
 FILE_2 = args[2]  # name of comparison interim csv file. For example: # sew_train
 # python3 kl_divergence.py music_train games_train
+# python3 kl_divergence.py music_train sew_train
 
 def csv_loader(PATH):
     text = pd.read_csv(PATH, names=['review','sentiment']) 
@@ -73,10 +74,6 @@ print("Finished Tokenizeing Corp 2")
 word_to_idx = {}
 idx_to_word = {}
 
-# size of corpses
-count_corp1 = len(corp_1)
-count_corp2 = len(corp_2)
-
 # Initialize Dictionaries for both corpus
 dict_1 = {}
 for i in range(len(all_words)):
@@ -88,17 +85,24 @@ dict_2 = {}
 for i in all_words:
     dict_2[word_to_idx[i]] = 0.01
 
+# size of corpses DOES THIS NEED TO BE CHANGED::.....
+#count_corp1 = len(corp_1)
+#count_corp2 = len(corp_2)
+count_corp1 = 0
+count_corp2 = 0
+
 # get word count for corpus 1
 for i in corp_1:
     dict_1[word_to_idx[i]] += 1
+    count_corp1 += 1
 
 # get word count for corpus 2
 for i in corp_2:
     dict_2[word_to_idx[i]] += 1
+    count_corp2 += 1
 
 print("Finished Word Counts")
-#######################################################33
-
+#######################################################
 # Convert to Probabilities
 
 # get word probabilites for corp 1

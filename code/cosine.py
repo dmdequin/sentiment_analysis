@@ -50,7 +50,7 @@ for i in range(len(X_1)):
     filtered = [w.lower() for w in token_review if not w.lower() in stop_words]
     corp_1.append(filtered)
 
-# dictionary of tokens
+# dictionary mapping tokens to a number
 dictionary = gensim.corpora.Dictionary(corp_1)
 
 # make BOW
@@ -74,9 +74,10 @@ for i in tqdm(range(1,len(X_2))): # start at 1 because 0 is "Review"
     query_doc_bow = dictionary.doc2bow(filtered) # update an existing dictionary and create bag of words
     corp_2.append(filtered)
     
-    # perform a similarity query against the corpus
+    # apply tf-idf to the bag-of-words of the review
     query_doc_tf_idf = tf_idf[query_doc_bow]
     
+    # perform a similarity query against the corpus
     doc_sim = sims[query_doc_tf_idf]
     
     # Average Similarity score
