@@ -5,7 +5,7 @@ This repository contains the work for a three phase project in Natural Language 
 
 ## Getting Started
 
-The language used in this project is Python Version 3.8.2
+The language used in this project is Python 3.8.2
 
 ### Prerequisites
 
@@ -31,10 +31,47 @@ python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
 python3 code/corpus_load.py Video_Games.json.gz games
 Will output to data/interim 3 csv files for each: train, dev & test.
 
-####################################################################################
-Need to add the bit about creating the dissimilar/random csvs here!!!
-####################################################################################
+Calc KL Divergence:
+Required files:
+code/kl_divergence.py
+data/interim/music_train.csv
+data/interim/sew_train.csv
+data/interim/games_train.csv
 
+You may need to uncomment these two lines:
+14 #import nltk
+15 #nltk.download('punkt')
+
+Run via:
+python3 kl_divergence.py music_train games_train
+python3 kl_divergence.py music_train sew_train
+
+This will print the KL-divergence between the given corpus. Please note the order as this is an asymmetric measure: kl(music-->games) =/= kl(games-->music).
+
+Select Dissimilar Dataset:
+Required files:
+code/cosine.py
+data/interim/music_train.csv
+data/interim/sew_train.csv
+data/interim/games_train.csv
+code/workdir/* 
+
+Run via:
+python3 code/cosine.py 'music_train' 'games_train' 'games' 10000
+python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000
+This will output to data/dissimilar the 4 different sized training sets and another file containing all the scores.
+
+Select Random Datasets:
+code/random_select.ipynb
+data/interim/music_train.csv
+data/interim/sew_train.csv
+data/interim/games_train.csv
+
+When the jupyter notebook is run, it will take the training sets and create 4 sets of training data in the data/random folder:
+games random 			10, 100, 1000, 10000
+games balanced random 	10, 100, 1000, 10000
+sewing random 			10, 100, 1000, 10000
+sewing balanced random 	10, 100, 1000, 10000
 
 Creating Models:
 
@@ -127,7 +164,6 @@ python3 code/metrics.py sew 00000ba 00010cp 00100cp 01000cp 10000cp 00010ra 0010
 It it is not required to pipe it to the .txt file, but this is more human readable if you just want to look quickly, it will print to the terminal otherwise.
 It will also output the same information into a CSV file in the report/metrics folder, with the headers:
 ['domain', 'trial_type', 'add_data', 'correctly_predicted', 'incorrectly_predicted', 'total_predicted_positives', 'ground_truth_positives', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
-
 
 ## Contributing
 Group 12
