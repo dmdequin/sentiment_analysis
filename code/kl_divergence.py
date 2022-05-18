@@ -11,6 +11,9 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
 
+#import nltk
+#nltk.download('punkt')
+
 start_time = time.time()
 
 args = sys.argv
@@ -33,12 +36,12 @@ def kl_divergence(a, b):
     return sums
     
 # Load Interim CSV file and split into X and y
-data_1 = csv_loader('../data/interim/' + FILE_1 + '.csv')
+data_1 = csv_loader('data/interim/' + FILE_1 + '.csv')
 X_1, y_1 = data_1[['review']], data_1[['sentiment']]
 #X_1 = X_1[0:1000]
 
 # Load Interim CSV file and split into X and y
-data_2 = csv_loader('../data/interim/' + FILE_2 + '.csv')
+data_2 = csv_loader('data/interim/' + FILE_2 + '.csv')
 X_2, y_2 = data_2[['review']], data_2[['sentiment']]
 #X_2 = X_2[0:1000]
 

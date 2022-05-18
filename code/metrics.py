@@ -5,6 +5,11 @@ from sklearn.metrics import recall_score
 import sys
 
 def comparerer(truth, predictions):
+	'''loops through truth/predictions and returns 	true positives, 
+													false positives, 
+													true negatives, 
+													false negatives, & 
+													accuracy'''
 	if len(predictions) != len(truth):
 		print('Lengths don\'t match!')
 		print(len(predictions))
@@ -44,6 +49,7 @@ if __name__ == '__main__':
 	df = pd.DataFrame(columns=columns)
 	print_state = True
 
+	#Goes through the things and calcs and prints various statistics for each set of predictions
 	for l in things: 		
 		if print_state == True:
 			print(f'{dom}_{l} data:')
@@ -108,6 +114,7 @@ if __name__ == '__main__':
 		df = pd.concat([df, df2], ignore_index = True)
 	#print (df)
 	
+	#Writes csv files so we can analyse results elsewhere.
 	if len(df['trial_type'].unique()) > 2:
 		filename = f'report/metrics/{dom}_mixed_metrics.csv'
 	else:

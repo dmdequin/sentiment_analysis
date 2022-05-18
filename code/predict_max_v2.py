@@ -3,7 +3,8 @@ import json
 import pandas as pd
 
 def get_predictions(PROBS, PRED_FILE):
-    # Get predictions from the probabilities
+    '''Takes the probabilities and returns either positive or negative class based on which has the highest probability.
+    outputs predictions to pred_file.csv'''
     probs = []
     for p in PROBS:
         a = str(p).split(' ')

@@ -26,16 +26,16 @@ FILE_1 = args[1]        # name of base corpus. For example: # music_train
 FILE_2 = args[2]        # name of corpus file to select training samples. For example: # sew_train or games_train
 FILE_NAME = args[3]     # name of corpus category. For example: 'sew'
 N_DIS = int(args[4])    # number of dissimilar embeddings to select
-# python3 cosine.py 'music_train' 'games_train' 'games' 10000
-# python3 cosine.py 'music_train' 'sew_train' 'sew' 10000
+# python3 code/cosine.py 'music_train' 'games_train' 'games' 10000
+# python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000
 
 # Load base corpus file and split into X and y
-data_1 = csv_loader('../data/interim/' + FILE_1 + '.csv')
+data_1 = csv_loader('data/interim/' + FILE_1 + '.csv')
 #data_1 = data_1[0:10]
 X_1, y_1 = data_1[['review']], data_1[['sentiment']]
 
 # Load Second corpus CSV file and split into X and y
-data_2 = csv_loader('../data/interim/' + FILE_2 + '.csv')
+data_2 = csv_loader('data/interim/' + FILE_2 + '.csv')
 #data_2 = data_2[0:10]
 X_2, y_2 = data_2[['review']], data_2[['sentiment']]
 
@@ -60,7 +60,7 @@ corpus = [dictionary.doc2bow(gen_doc) for gen_doc in corp_1]
 tf_idf = gensim.models.TfidfModel(corpus)
 
 # building the index
-sims = gensim.similarities.Similarity('workdir/',tf_idf[corpus],
+sims = gensim.similarities.Similarity('code/workdir/',tf_idf[corpus],
                                         num_features=len(dictionary))
 
 # tokenize second corpus, lowercase, and compute similarity
@@ -90,7 +90,7 @@ print("Done!")
 # Save File of Only Similarity Scores for all Training Samples
 sims_only = [sim[0] for sim in avg_sims]
 sims_only = pd.DataFrame(sims_only, columns=['similarity'])
-sims_only.to_csv('../data/dissimilar/'+FILE_NAME+'_sim_score.csv', index=False, header=False)
+sims_only.to_csv('data/dissimilar/'+FILE_NAME+'_sim_score.csv', index=False, header=False)
 
 # Priority queue of most dissimilar sentences
 print("Starting PQ")
@@ -113,10 +113,10 @@ top_1000 = most_dis[0:1000]
 top_10thou = most_dis
 
 # Save Top Disimilar Sets of Training Samples
-top_10.to_csv('../data/dissimilar/'+FILE_NAME+'10.csv', index=False, header=False)
-top_100.to_csv('../data/dissimilar/'+FILE_NAME+'100.csv', index=False, header=False)
-top_1000.to_csv('../data/dissimilar/'+FILE_NAME+'1000.csv', index=False, header=False)
-top_10thou.to_csv('../data/dissimilar/'+FILE_NAME+'10000.csv', index=False, header=False)
+top_10.to_csv('data/dissimilar/'+FILE_NAME+'10.csv', index=False, header=False)
+top_100.to_csv('data/dissimilar/'+FILE_NAME+'100.csv', index=False, header=False)
+top_1000.to_csv('data/dissimilar/'+FILE_NAME+'1000.csv', index=False, header=False)
+top_10thou.to_csv('data/dissimilar/'+FILE_NAME+'10000.csv', index=False, header=False)
 
 print(f"Execution Time: {round(time.time() - start_time, 2)}")
 

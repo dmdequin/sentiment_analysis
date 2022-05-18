@@ -14,14 +14,14 @@ if __name__ == '__main__':
         MODEL = 'model' + TRIAL + '.pkl'
         TEST_FILE = TRIAL[:-8] + '_test.csv'
 
-        print(MODEL)
-        print(TEST_FILE)
+        #print(MODEL)
+        #print(TEST_FILE)
 
         PROBS_NAME = TRIAL + '_probs'
         PREDS_NAME = TRIAL + '_preds'
 
-
+        ## calls scripts to make predictions using given model and test dataset.
         probs = make_probs(MODEL, TEST_FILE, PROBS_NAME)
-        print(len(probs))
-        print('\ngetting predictions')
+        #print(len(probs))
+        #print('\ngetting predictions')
         get_predictions(probs, PREDS_NAME)

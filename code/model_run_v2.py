@@ -4,6 +4,7 @@ from baseline import *
 import torch
 
 def make_probs(MODEL,TEST_FILE, PROBS_FILE):
+    '''Returns probabilities given a model and test set. Creates probs_file.csv to store them in.'''
 
     batch_size = 2
 

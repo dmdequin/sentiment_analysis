@@ -16,6 +16,7 @@ import time
 
 ## functions
 def loader(PATH):
+    '''Loads the csv file and returns the bit we want'''
     with open(PATH, mode ='r')as file:
         csvFile = csv.reader(file)
         text = []
@@ -24,6 +25,7 @@ def loader(PATH):
     return text[1:]
 
 def splitter(L):
+    '''splits the list into X (features) and y (true labels)'''
     X = []
     y = []
     for i in L:
@@ -334,7 +336,7 @@ if __name__ == '__main__':
     train_labels = torch.tensor(y_train)
     val_labels = torch.tensor(y_dev)
 
-    # For fine-tuning BERT, the authors recommend a batch size of 16 or 32.
+    # Set batch size. 2 is about the highest that will run on a laptop for testing. 16 or 32 might work on HPC?
     batch_size = 2
 
     # Create the DataLoader for our training set
@@ -350,14 +352,15 @@ if __name__ == '__main__':
     set_seed(42)    # Set seed for reproducibility
 
 
-
-    if NEW:
+    #Making a new baseline model
+    if NEW: 
         print('New model being trained')
         bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
         train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
         pickle.dump(bert_classifier, open('models/model_'+f'{MODEL_NAME}'+'.pkl', 'wb'))
 
-    else:
+    #Finetuning the base model with additional training samples
+    else: 
         print('loading model')
         bert_classifier = pickle.load(open(MODEL, 'rb'))
         optimizer = AdamW(bert_classifier.parameters(),
