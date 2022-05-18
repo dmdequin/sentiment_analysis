@@ -88,61 +88,43 @@ Recall:          0.942
 
 --------------------------------------------------
 
-sew_00010re data:
+sew_00010ra data:
 
-There are 8735 predicted positives
+There are 8627 predicted positives
 There are 9417 true positives
-There are 9238 correct
-There are 762 incorrect
+There are 9140 correct
+There are 860 incorrect
 
-Accuracy:        92.38%
-True positives:  8695
-True negatives:  543
-False positives: 40
-False negatives: 722
-F1:              0.936
-Precision:       0.962
-Recall:          0.924
+Accuracy:        91.4%
+True positives:  8592
+True negatives:  548
+False positives: 35
+False negatives: 825
+F1:              0.929
+Precision:       0.961
+Recall:          0.914
 
 --------------------------------------------------
 
-sew_00100re data:
+sew_00100ra data:
 
-There are 8412 predicted positives
+There are 8920 predicted positives
 There are 9417 true positives
-There are 8947 correct
-There are 1053 incorrect
+There are 9399 correct
+There are 601 incorrect
 
-Accuracy:        89.47%
-True positives:  8388
-True negatives:  559
-False positives: 24
-False negatives: 1029
-F1:              0.916
-Precision:       0.96
-Recall:          0.895
-
---------------------------------------------------
-
-sew_01000re data:
-
-There are 9599 predicted positives
-There are 9417 true positives
-There are 9674 correct
-There are 326 incorrect
-
-Accuracy:        96.74%
-True positives:  9345
-True negatives:  329
-False positives: 254
-False negatives: 72
-F1:              0.965
+Accuracy:        93.99%
+True positives:  8868
+True negatives:  531
+False positives: 52
+False negatives: 549
+F1:              0.948
 Precision:       0.965
-Recall:          0.967
+Recall:          0.94
 
 --------------------------------------------------
 
-sew_10000re data:
+sew_01000ra data:
 
 There are 10000 predicted positives
 There are 9417 true positives
@@ -157,6 +139,24 @@ False negatives: 0
 F1:              0.913
 Precision:       0.887
 Recall:          0.942
+
+--------------------------------------------------
+
+sew_10000ra data:
+
+There are 9604 predicted positives
+There are 9417 true positives
+There are 9681 correct
+There are 319 incorrect
+
+Accuracy:        96.81%
+True positives:  9351
+True negatives:  330
+False positives: 253
+False negatives: 66
+F1:              0.965
+Precision:       0.965
+Recall:          0.968
 
 --------------------------------------------------
 
@@ -229,78 +229,6 @@ False negatives: 525
 F1:              0.95
 Precision:       0.965
 Recall:          0.942
-
---------------------------------------------------
-
-sew_00010ra data:
-
-There are 8627 predicted positives
-There are 9417 true positives
-There are 9140 correct
-There are 860 incorrect
-
-Accuracy:        91.4%
-True positives:  8592
-True negatives:  548
-False positives: 35
-False negatives: 825
-F1:              0.929
-Precision:       0.961
-Recall:          0.914
-
---------------------------------------------------
-
-sew_00100ra data:
-
-There are 8920 predicted positives
-There are 9417 true positives
-There are 9399 correct
-There are 601 incorrect
-
-Accuracy:        93.99%
-True positives:  8868
-True negatives:  531
-False positives: 52
-False negatives: 549
-F1:              0.948
-Precision:       0.965
-Recall:          0.94
-
---------------------------------------------------
-
-sew_01000ra data:
-
-There are 10000 predicted positives
-There are 9417 true positives
-There are 9417 correct
-There are 583 incorrect
-
-Accuracy:        94.17%
-True positives:  9417
-True negatives:  0
-False positives: 583
-False negatives: 0
-F1:              0.913
-Precision:       0.887
-Recall:          0.942
-
---------------------------------------------------
-
-sew_10000ra data:
-
-There are 9604 predicted positives
-There are 9417 true positives
-There are 9681 correct
-There are 319 incorrect
-
-Accuracy:        96.81%
-True positives:  9351
-True negatives:  330
-False positives: 253
-False negatives: 66
-F1:              0.965
-Precision:       0.965
-Recall:          0.968
 
 --------------------------------------------------
 

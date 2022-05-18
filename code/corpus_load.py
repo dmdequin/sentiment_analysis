@@ -15,8 +15,8 @@ FILE = args[2]     # name to save interim CSV file. For example: # games
 # = args[3]  # 
 
 # examples: 
-# python3 corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
-# python3 corpus_load.py Video_Games.json.gz games
+# python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
+# python3 code/corpus_load.py Video_Games.json.gz games
 
 #######################################################
 review_keys = set(['image', 'vote'])
@@ -80,7 +80,7 @@ def splitter(L):
 
 #####################################################
 # Load Raw Data
-raw_file = '../data/raw/' + CORPUS
+raw_file = 'data/raw/' + CORPUS
 raw = loader(raw_file)
 
 # Make sets of Review Text and Star Rating
@@ -115,9 +115,9 @@ print(f"Length Test: {len(test)}")
 
 #######################################################
 # save to csv
-train.to_csv('../data/interim/' + FILE + '_train.csv', index=False, header=False)
-val.to_csv('../data/interim/' + FILE + '_val.csv', index=False, header=False)
-test.to_csv('../data/interim/' + FILE + '_test.csv', index=False, header=False)
+train.to_csv('data/interim/' + FILE + '_train.csv', index=False, header=False)
+val.to_csv('data/interim/' + FILE + '_val.csv', index=False, header=False)
+test.to_csv('data/interim/' + FILE + '_test.csv', index=False, header=False)
 
 
 # Load Interim CSV file

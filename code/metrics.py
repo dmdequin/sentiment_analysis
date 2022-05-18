@@ -47,16 +47,17 @@ if __name__ == '__main__':
 	for l in things: 		
 		if print_state == True:
 			print(f'{dom}_{l} data:')
-			subject = pd.read_csv(f'../data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
+			subject = pd.read_csv(f'data/predictions/{dom}_{l}_preds.csv', header=None, sep=',')
 			
 			subject = subject.T
 			subject = subject[:-1]
 			print(f'\nThere are {int(sum(subject[0]))} predicted positives')
 			#print(subject.shape)
 
-			subject_true = pd.read_csv(f'../data/interim/{dom}_test.csv')
+			subject_true = pd.read_csv(f'data/interim/{dom}_test.csv', header=None)
 			#subject_true = subject_true[:1000]
-			subject_true = subject_true['label']
+			subject_true = subject_true[1]
+			#print(subject_true)
 			print(f'There are {sum(subject_true)} true positives')
 			#print(sew_full.shape)
 
@@ -108,8 +109,8 @@ if __name__ == '__main__':
 	#print (df)
 	
 	if len(df['trial_type'].unique()) > 2:
-		filename = f'../report/metrics/{dom}_mixed_metrics.csv'
+		filename = f'report/metrics/{dom}_mixed_metrics.csv'
 	else:
-		filename = f'../report/metrics/{dom}_{l[-2:]}_metrics.csv'
+		filename = f'report/metrics/{dom}_{l[-2:]}_metrics.csv'
 	# filename = 'test.csv'
 	df.to_csv(filename, index=False)

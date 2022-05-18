@@ -355,7 +355,7 @@ if __name__ == '__main__':
         print('New model being trained')
         bert_classifier, optimizer, scheduler = initialize_model(epochs=2)
         train(bert_classifier, train_dataloader, val_dataloader, epochs=2, evaluation=True)
-        pickle.dump(bert_classifier, open('models/model'+f'{MODEL_NAME}'+'.pkl', 'wb'))
+        pickle.dump(bert_classifier, open('models/model_'+f'{MODEL_NAME}'+'.pkl', 'wb'))
 
     else:
         print('loading model')
