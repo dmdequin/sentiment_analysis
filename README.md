@@ -128,12 +128,8 @@ It it is not required to pipe it to the .txt file, but this is more human readab
 It will also output the same information into a CSV file in the report/metrics folder, with the headers:
 ['domain', 'trial_type', 'add_data', 'correctly_predicted', 'incorrectly_predicted', 'total_predicted_positives', 'ground_truth_positives', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 
 ## Contributing
-
 Group 12
 
 * Danielle Dequin ddeq@itu.dk
@@ -142,11 +138,7 @@ Group 12
 
 ## Authors
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under no such License - see the [LICENSE.md](LICENSE.md) file for details if we make one.
+See also the list of [contributors](https://github.itu.dk/ddeq/2yp_sentiment_analysis/contributors) who participated in this project.
 
 ## Acknowledgments
 
