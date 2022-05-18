@@ -1,11 +1,7 @@
-import json
-import csv
-import re
 import sys
 import pandas as pd
 import numpy as np
 import heapq
-import sys
 from tqdm import tqdm
 import time
 import gensim
@@ -16,16 +12,20 @@ start_time = time.time()
 
 # Functions
 def csv_loader(PATH):
+    """Function that loads a specific csv file as a pandas dataframe.
+    """
     text = pd.read_csv(PATH, names=['review','sentiment']) 
     return text
 
 args = sys.argv
 if len(args) < 2:
     print("You forgot something")
-FILE_1 = args[1]        # name of base corpus. For example: # music_train
-FILE_2 = args[2]        # name of corpus file to select training samples. For example: # sew_train or games_train
+FILE_1 = args[1]        # name of base corpus. For example: # 'music_train'
+FILE_2 = args[2]        # name of corpus file to select training samples. For example: # 'sew_train' or 'games_train'
 FILE_NAME = args[3]     # name of corpus category. For example: 'sew'
 N_DIS = int(args[4])    # number of dissimilar embeddings to select
+
+# Example of how to run this script from the main folder in the repo: 
 # python3 code/cosine.py 'music_train' 'games_train' 'games' 10000
 # python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000
 
@@ -85,7 +85,7 @@ for i in tqdm(range(1,len(X_2))): # start at 1 because 0 is "Review"
     sim_ave = sum_of_sims/len(corp_1)                # round (removed the rounding to see if that changes things)
     avg_sims.append((sim_ave, i))                    # append (similarity, sentence index)
         
-print("Done!")
+print("Done Computing Cosine Similarity!")
 
 # Save File of Only Similarity Scores for all Training Samples
 sims_only = [sim[0] for sim in avg_sims]
@@ -107,6 +107,7 @@ while count <= 10000:
 # Convert to data frame
 most_dis = pd.DataFrame(most_dis, columns=['review','sentiment','cosine_score','orig_index'])
 
+# Save objects of the top 10, 100, 1000, and 10000 
 top_10 = most_dis[0:10]
 top_100 = most_dis[0:100]
 top_1000 = most_dis[0:1000]

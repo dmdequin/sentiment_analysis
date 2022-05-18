@@ -6,8 +6,6 @@ import sys
 import pandas as pd
 import numpy as np
 from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
 
@@ -21,8 +19,10 @@ if len(args) < 2:
     print("You forgot something")
 FILE_1 = args[1]  # name of interim csv file. For example: # games_train
 FILE_2 = args[2]  # name of comparison interim csv file. For example: # sew_train
-# python3 kl_divergence.py music_train games_train
-# python3 kl_divergence.py music_train sew_train
+
+# Example of how to run this script from the main directory of the repo:
+# python3 code/kl_divergence.py 'music_train' 'games_train'
+# python3 code/kl_divergence.py 'music_train' 'sew_train'
 
 def csv_loader(PATH):
     text = pd.read_csv(PATH, names=['review','sentiment']) 
@@ -70,9 +70,8 @@ all_words = all_words + corp_2
 all_words = list(set(all_words))
 
 print("Finished Tokenizeing Corp 2")
-############################################################
 
-# Word Count Dictionaries for Corpses
+# Word Count Dictionaries for each corpus
 # Dictionary of word to index, and index to word
 word_to_idx = {}
 idx_to_word = {}
@@ -105,9 +104,8 @@ for i in corp_2:
     count_corp2 += 1
 
 print("Finished Word Counts")
-#######################################################
-# Convert to Probabilities
 
+# Convert to Probabilities
 # get word probabilites for corp 1
 corp1_prob = {}
 for k,v in dict_1.items():
@@ -125,13 +123,7 @@ prob2_list = list(corp2_prob.values())
 print("Finished Probabilitities")
 
 print("Computing KL-Divergence")
-
 kld = kl_divergence(prob1_list, prob2_list)
 
 print(f"KL-Divergence between corpses: {kld}")
-
 print(f"Execution Time: {round(time.time() - start_time, 2)}")
-
-
-
-
