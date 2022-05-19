@@ -77,7 +77,7 @@ data/interim/sew_train.csv
 
 data/interim/games_train.csv
 
-code/workdir/* 
+code/workdir
 
 
 Run via:
