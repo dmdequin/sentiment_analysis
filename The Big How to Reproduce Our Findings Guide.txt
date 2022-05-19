@@ -40,7 +40,7 @@ code/cosine.py
 data/interim/music_train.csv
 data/interim/sew_train.csv
 data/interim/games_train.csv
-code/workdir/* 
+code/workdir
 
 Run via:
 python3 code/cosine.py 'music_train' 'games_train' 'games' 10000
