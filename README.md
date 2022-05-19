@@ -5,7 +5,7 @@ This repository contains the work for a three phase project in Natural Language 
 
 ## Getting Started
 
-The language used in this project is Python 3.8.2
+The language used in this project is Python 3.8.10
 
 ### Prerequisites
 
