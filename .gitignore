@@ -4,11 +4,7 @@ data/raw/music_reviews_dev.json
 data/raw/music_reviews_test_masked.json
 data/raw/music_reviews_train.json
 sabrina/archive/
-sabrina/Video_Games_5.json.gz
-sabrina/Video_Games_5.json
-sabrina/Arts_Crafts_and_Sewing_5.json
-sabrina/Arts_Crafts_and_Sewing_5.json.gz
-sabrina/Digital_Music_5.json
-sabrina/Digital_Music_5.json.gz
+sabrina/data/
 sabrina/workdir/
+sabrina/__pycache__/
 syp
