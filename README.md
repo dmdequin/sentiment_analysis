@@ -3,6 +3,28 @@
 
 This repository contains the work for a three phase project in Natural Language Processing. Phase 1 is the development of an NLP model for the purpose of sentiment classification of Amazon music reviews. Stage 2 involved creating edge cases that would challenge the model that was employed in stage one, as well as the predictions of these hard cases. Stage 3 involves a novel study related to sentiment analysis in a cross-domain setting.
 
+
+## Folders in this repo:
+* code: contains all notebooks and scripts used in this project. 
+  *  models: contains all trained models
+  *  archive: scripts and notebooks not needed in the end
+  *  workdir: a folder necessary for running the similarity script
+* data: all of the data required for this project.
+  * dissimilar: selected dissimilar training data
+  * interim: processed review data
+  * predictions: predicted classes based on probabilities files
+  * probabilities: probability of positive and negative classes of test set
+  * random: randomly selected training data
+  * raw: Raw Amazon review data
+* docs: doc and txt files created for this project
+* report: Contains the final report itself, and 
+  * figures: all figures produced during the project
+  * metrics: all metrics produced
+* sabrina: Sabrina's folder
+ * archive: 
+ * src: 
+
+
 ## Getting Started
 
 The language used in this project is Python 3.8.10
