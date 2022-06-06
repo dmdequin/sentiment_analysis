@@ -21,8 +21,8 @@ This repository contains the work for a three phase project in Natural Language 
   * figures: all figures produced during the project
   * metrics: all metrics produced
 * sabrina: Sabrina's folder
- * archive: 
- * src: 
+  * archive: ?
+  * src: ?
 
 
 ## Getting Started
