@@ -39,7 +39,7 @@ Most up-to-date version can be found in 'The Big How to Reproduce Our Findings G
 Environment requirements:
 All required libraries/versions etc can be found in the requirements.txt
 
-Creating Datasets:
+#### Creating Datasets:
 The interim datasets were created by loading the JSON files, and outputting CSVs containing only the text and the label.
 Required files:
 
@@ -58,7 +58,7 @@ python3 code/corpus_load.py Video_Games.json.gz games
 Will output to data/interim 3 csv files for each: train, dev & test.
 
 
-Calc KL Divergence:
+#### Calculate KL Divergence:
 
 Required files:
 
@@ -87,7 +87,7 @@ python3 kl_divergence.py music_train sew_train
 This will print the KL-divergence between the given corpus. Please note the order as this is an asymmetric measure: kl(music-->games) =/= kl(games-->music).
 
 
-Select Dissimilar Dataset:
+#### Select Dissimilar Dataset:
 
 Required files:
 
@@ -111,7 +111,7 @@ python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000
 This will output to data/dissimilar the 4 different sized training sets and another file containing all the scores.
 
 
-Select Random Datasets:
+#### Select Random Datasets:
 
 code/random_select.ipynb
 
@@ -132,7 +132,7 @@ sewing random: 10, 100, 1000, 10000
 sewing balanced random: 10, 100, 1000, 10000
 
 
-Creating Models:
+#### Creating Models:
 
 Baseline Model:
 
@@ -232,7 +232,7 @@ python3 code/baseline.py 0 'data/random/sew_res_10000.csv' 'data/interim/sew_val
 Each line will output a pickled model into the code/models folder.
 
 
-Create Predictions:
+#### Create Predictions:
 
 Required files:
 
@@ -263,7 +263,7 @@ python3 code/test.py games es
 
 These will run the test datasets against each model within each catagory, and output for each a probabilities file and predictions file, in data/probabilities and data/predictions respectively. 
 
-Get Metrics:
+#### Get Metrics:
 
 Required files:
 
