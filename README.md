@@ -1,6 +1,5 @@
-# Second Year Project
+# Second Year Project: Introduction to Natural Language Processing and Deep Learning
 ### IT University of Copenhagen | Spring 2022
-# Introduction to Natural Language Processing and Deep Learning
 
 This repository contains the work for a three phase project in Natural Language Processing. Phase 1 is the development of an NLP model for the purpose of sentiment classification of Amazon music reviews. Stage 2 involved creating edge cases that would challenge the model that was employed in stage one, as well as the predictions of these hard cases. Stage 3 involves a novel study related to sentiment analysis in a cross-domain setting.
 
