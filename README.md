@@ -49,11 +49,11 @@ Most up-to-date version can be found in [The Big How to Reproduce Our Findings G
 The interim datasets were created by loading the JSON files, and outputting CSVs containing only the text with corresponding label.
 Required files:
 
-code/data_prep.ipynb 
+code/[data_prep.ipynb](https://github.com/dmdequin/sentiment_analysis/blob/main/code/data_prep.ipynb) 
 
-*This is a jupyter notebook. When run, it will output music_train.csv, music_dev.csv and music_test.csv to the data/interim folder. The raw data was already split into train/dev/test.
+*This is a jupyter notebook. When run, it will output music_train.csv, music_dev.csv and music_test.csv to the data/interim folder. The raw **Digital Music** data was already split for us into train, dev, and test sets by our professor. If recreating this project, you will have to create your own train, dev, test splits. (ADD DETAILS FOR COUNTS IN EACH CATEGORY)
 
-code/corpus_load.py 
+code/[corpus_load.py](https://github.com/dmdequin/sentiment_analysis/blob/main/code/corpus_load.py) 
 
 Run via:
 
