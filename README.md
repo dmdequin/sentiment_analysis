@@ -33,7 +33,7 @@ The language used in this project is Python 3.8.10
 
 ### Prerequisites
 
-Please see requirements.txt for libraries and versions
+Please see [requirements.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/requirements.txt) for libraries and versions required to run the code.
 
 ## How to Run everything:
 Most up-to-date version can be found in 'The Big How to Reproduce Our Findings Guide'.txt
