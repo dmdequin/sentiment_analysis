@@ -57,23 +57,21 @@ code/[data_prep.ipynb](https://github.com/dmdequin/sentiment_analysis/blob/main/
 
 code/[corpus_load.py](https://github.com/dmdequin/sentiment_analysis/blob/main/code/corpus_load.py) 
 
-Run via:
+**Run via:**
 
-python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
-
-python3 code/corpus_load.py Video_Games.json.gz games
+```python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew```<br>
+```python3 code/corpus_load.py Video_Games.json.gz games```
 
 Will output to data/interim 3 csv files for each: train, dev & test.
 
 
 #### Calculate KL Divergence:
 
-**Required files:**
-
-code/kl_divergence.py<br>
-data/interim/music_train.csv<br>
-data/interim/sew_train.csv<br>
-data/interim/games_train.csv
+**Required files:**<br>
+* code/kl_divergence.py<br>
+* data/interim/music_train.csv<br>
+* data/interim/sew_train.csv<br>
+* data/interim/games_train.csv
 
 **From kl_divergence.py you may need to uncomment these two lines:**<br>
 12 #import nltk<br>
@@ -89,13 +87,12 @@ This will print the KL-divergence between the given corpus. Please note the orde
 
 #### Select Dissimilar Dataset:
 
-**Required files:**
-
-code/cosine.py<br>
-data/interim/music_train.csv<br>
-data/interim/sew_train.csv<br>
-data/interim/games_train.csv<br>
-code/workdir
+**Required files:**<br>
+* code/cosine.py<br>
+* data/interim/music_train.csv<br>
+* data/interim/sew_train.csv<br>
+* data/interim/games_train.csv<br>
+* code/workdir
 
 **Run via:**<br>
 ```python3 code/cosine.py 'music_train' 'games_train' 'games' 10000```<br>
@@ -107,10 +104,10 @@ This will output to data/dissimilar the 4 different sized training sets and anot
 #### Select Random Datasets:
 
 **Required Files:**<br>
-code/random_select.ipynb<br>
-data/interim/music_train.csv<br>
-data/interim/sew_train.csv<br>
-data/interim/games_train.csv<br>
+* code/random_select.ipynb<br>
+* data/interim/music_train.csv<br>
+* data/interim/sew_train.csv<br>
+* data/interim/games_train.csv<br>
 
 When the jupyter notebook is run, it will take the training sets and create 4 sets of training data in the data/random folder:
 
@@ -123,9 +120,9 @@ sewing balanced random: 10, 100, 1000, 10000<br>
 
 **Baseline Model:**<br>
 Required files:<br>
-code/baseline.py<br>
-data/interim/music_train.csv<br>
-data/interim/music_dev.csv
+* code/baseline.py<br>
+* data/interim/music_train.csv<br>
+* data/interim/music_dev.csv
 
 **Run via:**
 
@@ -136,15 +133,14 @@ This will output a pickled model which can be found at: code/models/model_base.p
 
 #### Finetune experiments with new data:
 
-**Required files:**
-
-code/baseline.py<br>
-data/dissimilar/games*.csv (4 files)<br>
-data/dissimilar/sew*.csv (4 files)<br>
-data/random/games_\*.csv(4 files)<br>
-data/random/sew_\*.csv(4 files)<br>
-data/random/games_res_\*.csv(4 files)<br>
-data/random/sew_res_*.csv(4 files)<br>
+**Required files:**<br>
+* code/baseline.py<br>
+* data/dissimilar/games*.csv (4 files)<br>
+* data/dissimilar/sew*.csv (4 files)<br>
+* data/random/games_\*.csv(4 files)<br>
+* data/random/sew_\*.csv(4 files)<br>
+* data/random/games_res_\*.csv(4 files)<br>
+* data/random/sew_res_*.csv(4 files)<br>
 
 
 **Run via:**
@@ -202,16 +198,15 @@ data/random/sew_res_*.csv(4 files)<br>
 
 ```python3 code/baseline.py 0 'data/random/sew_res_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000es'```
 
-
 Each line will output a pickled model into the code/models folder.
 
 
 #### Create Predictions:
 
-Required files:<br>
-code/test.py<br>
-code/model_run_v2.py<br>
-code/predict_max_v2.py
+**Required files:**<br>
+* code/test.py<br>
+* code/model_run_v2.py<br>
+* code/predict_max_v2.py
 
 It is required that the model_base.pkl from above, as well as a
 10, 100, 1000, 10000 model exists for each domain being tested.
@@ -229,9 +224,8 @@ These will run the test datasets against each model within each catagory, and ou
 
 #### Get Metrics:
 
-Required files:
-
-code/metrics.py
+**Required files:**<br>
+* code/metrics.py
 
 data/predictions/*all the prediction files from above!*
 
@@ -251,7 +245,7 @@ It will also output the same information into a CSV file in the report/metrics f
 ## Contributing
 Group 12
 
-* Danielle Dequin ddeq@itu.dk
+* Danielle Dequin dmdequin@gmail.com
 * Chrisanna Cornish ccor@itu.dk
 * Sabrina Pereira sabf@itu.dk
 
