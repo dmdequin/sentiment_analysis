@@ -8,3 +8,5 @@ sabrina/data/
 sabrina/workdir/
 sabrina/__pycache__/
 syp
+*__pycache__
+*.ipynb_checkpoints
