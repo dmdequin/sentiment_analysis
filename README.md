@@ -55,7 +55,7 @@ code/[data_prep.ipynb](https://github.com/dmdequin/sentiment_analysis/blob/main/
 
 code/[corpus_load.py](https://github.com/dmdequin/sentiment_analysis/blob/main/code/corpus_load.py) 
 
-Run via:
+From the root directory, run via:
 
 python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
 
