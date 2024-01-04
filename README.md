@@ -141,60 +141,66 @@ This will output a pickled model which can be found at: code/models/model_base.p
 code/baseline.py<br>
 data/dissimilar/games*.csv (4 files)<br>
 data/dissimilar/sew*.csv (4 files)<br>
-data/random/games_*.csv(4 files)<br>
-data/random/sew_*.csv(4 files)<br>
-data/random/games_res_*.csv(4 files)<br>
+data/random/games_\*.csv(4 files)<br>
+data/random/sew_\*.csv(4 files)<br>
+data/random/games_res_\*.csv(4 files)<br>
 data/random/sew_res_*.csv(4 files)<br>
 
 
-**Run via:**<br>
-Selected:
+**Run via:**
 
+**Selected:**<br>
 ```python3 code/baseline.py 0 'data/dissimilar/games10.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/games100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/games1000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/games10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/sew10.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/sew100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/sew1000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000cp'```<br>
+
 ```python3 code/baseline.py 0 'data/dissimilar/sew10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000cp'```<br>
 
 
-Randomised:<br>
-python3 code/baseline.py 0 'data/random/games_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010ra'
+**Randomised:**<br>
+```python3 code/baseline.py 0 'data/random/games_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010ra'```
 
-python3 code/baseline.py 0 'data/random/games_00100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100ra'
+```python3 code/baseline.py 0 'data/random/games_00100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100ra'```
 
-python3 code/baseline.py 0 'data/random/games_01000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000ra'
+```python3 code/baseline.py 0 'data/random/games_01000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000ra'```
 
-python3 code/baseline.py 0 'data/random/games_10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000ra'
+```python3 code/baseline.py 0 'data/random/games_10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000ra'```
 
-python3 code/baseline.py 0 'data/random/sew_00010.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010ra'
+```python3 code/baseline.py 0 'data/random/sew_00010.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010ra'```
 
-python3 code/baseline.py 0 'data/random/sew_00100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100ra'
+```python3 code/baseline.py 0 'data/random/sew_00100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100ra'```
 
-python3 code/baseline.py 0 'data/random/sew_01000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000ra'
+```python3 code/baseline.py 0 'data/random/sew_01000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000ra'```
 
-python3 code/baseline.py 0 'data/random/sew_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000ra'
+```python3 code/baseline.py 0 'data/random/sew_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000ra'```
 
 
-Balanced Randomised:<br>
+**Balanced Randomised:**<br>
+```python3 code/baseline.py 0 'data/random/games_res_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010es'```
 
-python3 code/baseline.py 0 'data/random/games_res_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010es'
+```python3 code/baseline.py 0 'data/random/games_res_00100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100es'```
 
-python3 code/baseline.py 0 'data/random/games_res_00100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100es'
+```python3 code/baseline.py 0 'data/random/games_res_01000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000es'```
 
-python3 code/baseline.py 0 'data/random/games_res_01000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000es'
+```python3 code/baseline.py 0 'data/random/games_res_10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000es'```
 
-python3 code/baseline.py 0 'data/random/games_res_10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000es'
+```python3 code/baseline.py 0 'data/random/sew_res_00010.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010es'```
 
-python3 code/baseline.py 0 'data/random/sew_res_00010.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010es'
+```python3 code/baseline.py 0 'data/random/sew_res_00100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100es'```
 
-python3 code/baseline.py 0 'data/random/sew_res_00100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100es'
+```python3 code/baseline.py 0 'data/random/sew_res_01000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000es'```
 
-python3 code/baseline.py 0 'data/random/sew_res_01000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000es'
-
-python3 code/baseline.py 0 'data/random/sew_res_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000es'
+```python3 code/baseline.py 0 'data/random/sew_res_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000es'```
 
 
 Each line will output a pickled model into the code/models folder.
@@ -230,13 +236,14 @@ code/metrics.py
 data/predictions/*all the prediction files from above!*
 
 
-Run Via:
+**Run Via:**
 
-python3 code/metrics.py games 00000ba 00010cp 00100cp 01000cp 10000cp 00010ra 00100ra 01000ra 10000ra 00010es 00100es 01000es 10000es > report/metrics/games_mixed_metrics.txt
+```python3 code/metrics.py games 00000ba 00010cp 00100cp 01000cp 10000cp 00010ra 00100ra 01000ra 10000ra 00010es 00100es 01000es 10000es > report/metrics/games_mixed_metrics.txt```
 
-python3 code/metrics.py sew 00000ba 00010cp 00100cp 01000cp 10000cp 00010ra 00100ra 01000ra 10000ra 00010es 00100es 01000es 10000es > report/metrics/sew_mixed_metrics.txt
+```python3 code/metrics.py sew 00000ba 00010cp 00100cp 01000cp 10000cp 00010ra 00100ra 01000ra 10000ra 00010es 00100es 01000es 10000es > report/metrics/sew_mixed_metrics.txt```
 
 It it is not required to pipe it to the .txt file, but this is more human readable if you just want to look quickly, it will print to the terminal otherwise.
+
 It will also output the same information into a CSV file in the report/metrics folder, with the headers:
 
 ['domain', 'trial_type', 'add_data', 'correctly_predicted', 'incorrectly_predicted', 'total_predicted_positives', 'ground_truth_positives', 'TP', 'TN', 'FP', 'FN', 'accuracy', 'precision', 'recall', 'f1']
