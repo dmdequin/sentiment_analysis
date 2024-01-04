@@ -3,7 +3,10 @@ Exploring cross-domain sentiment analysis.
 
 IT University of Copenhagen | Spring 2022
 
-This repository contains the work for a three phase project in Natural Language Processing. Phase 1 is the development of an NLP model for the purpose of sentiment classification of Amazon music reviews. Stage 2 involved creating edge cases that would challenge the model that was employed in stage one, as well as the predictions of these hard cases. Stage 3 involves a novel study related to sentiment analysis in a cross-domain setting.
+This repository contains the work for a three phase project in Natural Language Processing. 
+* Phase 1 is the development of an NLP model for the purpose of sentiment classification of Amazon music reviews. 
+* Stage 2 involved creating edge cases that would challenge the model from stage one, as well as the predictions of these hard cases. 
+* Stage 3 involves a novel study related to sentiment analysis in a cross-domain setting.
 
 
 ## Folders in this repo:
