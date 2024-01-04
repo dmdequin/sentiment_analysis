@@ -33,16 +33,13 @@ The language used in this project is Python 3.8.10
 
 ### Prerequisites
 
-Please see [requirements.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/requirements.txt) for libraries and versions required to run the code.
+All required libraries/versions etc can be found in the [requirements.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/requirements.txt).
 
 ## How to Run everything:
-Most up-to-date version can be found in 'The Big How to Reproduce Our Findings Guide'.txt
-
-Environment requirements:
-All required libraries/versions etc can be found in the requirements.txt
+Most up-to-date version can be found in [The Big How to Reproduce Our Findings Guide.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/The%20Big%20How%20to%20Reproduce%20Our%20Findings%20Guide.txt).
 
 #### Creating Datasets:
-The interim datasets were created by loading the JSON files, and outputting CSVs containing only the text and the label.
+The interim datasets were created by loading the JSON files, and outputting CSVs containing only the text with corresponding label.
 Required files:
 
 code/data_prep.ipynb 
