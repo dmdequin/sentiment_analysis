@@ -39,6 +39,8 @@ The language used in this project is Python 3.8.10
 All required libraries/versions etc can be found in the [requirements.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/requirements.txt).
 
 ## Datasets
+All of the data were sourced from Jianmo Ni. 2018 [Amazon review data](https://nijianmo.github.io/amazon/), using the complete review data. The initial model was trained on the source domain **Digital Music**. The target domains were **Video Games** and **Arts, Crafts, and Sewing**.
+
 
 ## How to Run everything:
 Most up-to-date version can be found in [The Big How to Reproduce Our Findings Guide.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/The%20Big%20How%20to%20Reproduce%20Our%20Findings%20Guide.txt).
