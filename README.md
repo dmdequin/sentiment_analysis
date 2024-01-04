@@ -7,22 +7,22 @@ This repository contains the work for a three phase project in Natural Language 
 
 
 ## Folders in this repo:
-* code: contains all notebooks and scripts used in this project. 
+* [code](https://github.com/dmdequin/sentiment_analysis/tree/main/code): contains all notebooks and scripts used in this project. 
   *  models: contains all trained models
   *  archive: scripts and notebooks not needed in the end
   *  workdir: a folder necessary for running the similarity script
-* data: all of the data required for this project.
+* [data](https://github.com/dmdequin/sentiment_analysis/tree/main/data): all of the data required for this project.
   * dissimilar: selected dissimilar training data
   * interim: processed review data
   * predictions: predicted classes based on probabilities files
   * probabilities: probability of positive and negative classes of test set
   * random: randomly selected training data
   * raw: Raw Amazon review data
-* docs: doc and txt files created for this project
-* report: Contains the final report itself, and 
-  * figures: all figures produced during the project
+* [docs](https://github.com/dmdequin/sentiment_analysis/tree/main/docs): doc and txt files created for this project
+* [report](https://github.com/dmdequin/sentiment_analysis/tree/main/report): Contains the final report itself, and 
+  * figures: all figures produced during data analysis and visualization
   * metrics: all metrics produced
-* sabrina: Sabrina's folder
+* [sabrina](https://github.com/dmdequin/sentiment_analysis/tree/main/sabrina): Sabrina's folder
   * archive: ?
   * src: ?
 
