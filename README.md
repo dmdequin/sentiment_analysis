@@ -45,6 +45,8 @@ All of the data were sourced from Jianmo Ni. 2018 [Amazon review data](https://n
 ## How to Run everything:
 Most up-to-date version can be found in [The Big How to Reproduce Our Findings Guide.txt](https://github.com/dmdequin/sentiment_analysis/blob/main/The%20Big%20How%20to%20Reproduce%20Our%20Findings%20Guide.txt).
 
+Run all commands from the repository's root directory.
+
 #### Creating Datasets:
 The interim datasets were created by loading the JSON files, and outputting CSVs containing only the text with corresponding label.
 Required files:
@@ -55,7 +57,7 @@ code/[data_prep.ipynb](https://github.com/dmdequin/sentiment_analysis/blob/main/
 
 code/[corpus_load.py](https://github.com/dmdequin/sentiment_analysis/blob/main/code/corpus_load.py) 
 
-From the root directory, run via:
+Run via:
 
 python3 code/corpus_load.py Arts_Crafts_and_Sewing.json.gz sew
 
@@ -66,139 +68,99 @@ Will output to data/interim 3 csv files for each: train, dev & test.
 
 #### Calculate KL Divergence:
 
-Required files:
+**Required files:**
 
-code/kl_divergence.py
-
-data/interim/music_train.csv
-
-data/interim/sew_train.csv
-
+code/kl_divergence.py<br>
+data/interim/music_train.csv<br>
+data/interim/sew_train.csv<br>
 data/interim/games_train.csv
 
+**From kl_divergence.py you may need to uncomment these two lines:**<br>
+12 #import nltk<br>
+13 #nltk.download('punkt')
 
-You may need to uncomment these two lines:
+**Run via:**
 
-14 #import nltk
-
-15 #nltk.download('punkt')
-
-
-Run via:
-
-python3 kl_divergence.py music_train games_train
-
-python3 kl_divergence.py music_train sew_train
+```python3 code/kl_divergence.py music_train games_train```<br>
+```python3 code/kl_divergence.py music_train sew_train```
 
 This will print the KL-divergence between the given corpus. Please note the order as this is an asymmetric measure: kl(music-->games) =/= kl(games-->music).
 
 
 #### Select Dissimilar Dataset:
 
-Required files:
+**Required files:**
 
-code/cosine.py
-
-data/interim/music_train.csv
-
-data/interim/sew_train.csv
-
-data/interim/games_train.csv
-
+code/cosine.py<br>
+data/interim/music_train.csv<br>
+data/interim/sew_train.csv<br>
+data/interim/games_train.csv<br>
 code/workdir
 
-
-Run via:
-
-python3 code/cosine.py 'music_train' 'games_train' 'games' 10000
-
-python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000
+**Run via:**<br>
+```python3 code/cosine.py 'music_train' 'games_train' 'games' 10000```<br>
+```python3 code/cosine.py 'music_train' 'sew_train' 'sew' 10000```
 
 This will output to data/dissimilar the 4 different sized training sets and another file containing all the scores.
 
 
 #### Select Random Datasets:
 
-code/random_select.ipynb
-
-data/interim/music_train.csv
-
-data/interim/sew_train.csv
-
-data/interim/games_train.csv
+**Required Files:**<br>
+code/random_select.ipynb<br>
+data/interim/music_train.csv<br>
+data/interim/sew_train.csv<br>
+data/interim/games_train.csv<br>
 
 When the jupyter notebook is run, it will take the training sets and create 4 sets of training data in the data/random folder:
 
-games random: 10, 100, 1000, 10000
-
-games balanced random: 10, 100, 1000, 10000
-
-sewing random: 10, 100, 1000, 10000
-
-sewing balanced random: 10, 100, 1000, 10000
-
+games random: 10, 100, 1000, 10000<br>
+games balanced random: 10, 100, 1000, 10000<br>
+sewing random: 10, 100, 1000, 10000<br>
+sewing balanced random: 10, 100, 1000, 10000<br>
 
 #### Creating Models:
 
-Baseline Model:
-
-Required files:
-
-code/baseline.py
-
-data/interim/music_train.csv
-
+**Baseline Model:**<br>
+Required files:<br>
+code/baseline.py<br>
+data/interim/music_train.csv<br>
 data/interim/music_dev.csv
 
+**Run via:**
 
-Run via:
-
-python3 code/baseline.py 1 'data/interim/music_train.csv' 'data/interim/music_dev.csv' None 'base'
+```python3 code/baseline.py 1 'data/interim/music_train.csv' 'data/interim/music_dev.csv' None 'base'```
 
 This will output a pickled model which can be found at: code/models/model_base.pkl
 
-Finetune experiments with new data:
 
-Required files:
+#### Finetune experiments with new data:
 
-code/baseline.py
+**Required files:**
 
-data/dissimilar/games*.csv (4 files)
-
-data/dissimilar/sew*.csv (4 files)
-
-data/random/games_*.csv(4 files)
-
-data/random/sew_*.csv(4 files)
-
-data/random/games_res_*.csv(4 files)
-
-data/random/sew_res_*.csv(4 files)
+code/baseline.py<br>
+data/dissimilar/games*.csv (4 files)<br>
+data/dissimilar/sew*.csv (4 files)<br>
+data/random/games_*.csv(4 files)<br>
+data/random/sew_*.csv(4 files)<br>
+data/random/games_res_*.csv(4 files)<br>
+data/random/sew_res_*.csv(4 files)<br>
 
 
-Run via:
-
+**Run via:**<br>
 Selected:
 
-python3 code/baseline.py 0 'data/dissimilar/games10.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010cp'
-
-python3 code/baseline.py 0 'data/dissimilar/games100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100cp'
-
-python3 code/baseline.py 0 'data/dissimilar/games1000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000cp'
-
-python3 code/baseline.py 0 'data/dissimilar/games10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000cp'
-
-python3 code/baseline.py 0 'data/dissimilar/sew10.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010cp'
-
-python3 code/baseline.py 0 'data/dissimilar/sew100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100cp'
-
-python3 code/baseline.py 0 'data/dissimilar/sew1000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000cp'
-
-python3 code/baseline.py 0 'data/dissimilar/sew10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000cp'
+```python3 code/baseline.py 0 'data/dissimilar/games10.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/games100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/games1000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_01000cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/games10000.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_10000cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/sew10.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00010cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/sew100.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_00100cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/sew1000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_01000cp'```<br>
+```python3 code/baseline.py 0 'data/dissimilar/sew10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000cp'```<br>
 
 
-Randomised:
-
+Randomised:<br>
 python3 code/baseline.py 0 'data/random/games_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010ra'
 
 python3 code/baseline.py 0 'data/random/games_00100.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00100ra'
@@ -216,7 +178,7 @@ python3 code/baseline.py 0 'data/random/sew_01000.csv' 'data/interim/sew_val.csv
 python3 code/baseline.py 0 'data/random/sew_10000.csv' 'data/interim/sew_val.csv' code/models/model_base.pkl 'sew_10000ra'
 
 
-Balanced Randomised:
+Balanced Randomised:<br>
 
 python3 code/baseline.py 0 'data/random/games_res_00010.csv' 'data/interim/games_val.csv' code/models/model_base.pkl 'games_00010es'
 
@@ -240,32 +202,22 @@ Each line will output a pickled model into the code/models folder.
 
 #### Create Predictions:
 
-Required files:
-
-code/test.py
-
-code/model_run_v2.py
-
+Required files:<br>
+code/test.py<br>
+code/model_run_v2.py<br>
 code/predict_max_v2.py
 
 It is required that the model_base.pkl from above, as well as a
 10, 100, 1000, 10000 model exists for each domain being tested.
 
-Run via:
+**Run via:**
 
-python3 code/test.py sew cp
-
-python3 code/test.py games cp
-
-
-python3 code/test.py sew ra
-
-python3 code/test.py games ra
-
-
-python3 code/test.py sew es
-
-python3 code/test.py games es
+```python3 code/test.py sew cp```<br>
+```python3 code/test.py games cp```<br>
+```python3 code/test.py sew ra```<br>
+```python3 code/test.py games ra```<br>
+```python3 code/test.py sew es```<br>
+```python3 code/test.py games es```<br>
 
 These will run the test datasets against each model within each catagory, and output for each a probabilities file and predictions file, in data/probabilities and data/predictions respectively. 
 
